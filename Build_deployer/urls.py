@@ -10,4 +10,5 @@ from Build_deployer import views
 urlpatterns = [
     url(r'^$', views.HomePageView.as_view()),
     url(r'^about/$', views.AboutPageView.as_view()),
+    url(r'^login_failed/$', views.LoginFailedPageView.as_view()),
 ]
