@@ -11,10 +11,12 @@
 <body>
 	<div class="container">
 		<section id="content">
-			<form action="/logi/">
+			<form action="/build/" method="post">
 				<h1>Build Deployer</h1>
-				<input type="text" placeholder="Username" required="" id="username" />
-				<input type="password" placeholder="Password" required="" id="password" />
+			<!-- <input type="text" placeholder="Username" required="" id="username" />
+				<input type="password" placeholder="Password" required="" id="password" /> -->
+				{% csrf_token %}
+    			{{ login_form }}
 				<input type="submit" value="Log in" />
 				<!-- <a href="#">Lost your password?</a>
 				<a href="#">Register</a> -->

@@ -8,7 +8,8 @@ from django.conf.urls import url
 from Build_deployer import views
 
 urlpatterns = [
-    url(r'^$', views.HomePageView.as_view()),
-    url(r'^about/$', views.AboutPageView.as_view()),
-    url(r'^login_failed/$', views.LoginFailedPageView.as_view()),
+    url(r'^$', views.login_validation),
+    #url(r'^about/$', views.AboutPageView.as_view()),
+#    url(r'^login_failed/$', views.login_validation),
+ #   url(r'^get_login/$', views.get_name, name='get_name'),
 ]
