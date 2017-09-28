@@ -11,6 +11,11 @@ class HomePageView(TemplateView):
     def get(self, request, **kwargs):
         form = LoginForm(request.GET)
         render(request, 'login.jsp', {'form': form})
+        
+class FileProfPageView(TemplateView):
+    def get(self, request, **kwargs):
+        form = LoginForm(request.GET)
+        render(request, 'FileProf.html')
     
     
 class TemplatesView(TemplateView):
