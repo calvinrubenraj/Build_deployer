@@ -12,15 +12,16 @@ class HomePageView(TemplateView):
         form = LoginForm(request.GET)
         render(request, 'login.jsp', {'form': form})
         
-class FileProfPageView(TemplateView):
-    def get(self, request, **kwargs):
-        form = LoginForm(request.GET)
-        render(request, 'FileProf.html')
+class CygnetFileProfPageView(TemplateView):
+    template_name = "CygFileProf.html"
     
+class M6FileProfPageView(TemplateView):
+    template_name = "M6FileProf.html"
+    
+class M6EncrptyFileProfPageView(TemplateView):
+    template_name = "M6EnctFileProf.html"    
     
 class TemplatesView(TemplateView):
-    """def get(self, request, **kwargs):
-        return render(request, 'about.html', context=None)"""
     template_name = "LeftNav.html"
 
 class TestView(TemplateView):    
@@ -34,7 +35,7 @@ def login_validation(request):
         login_valid_object=login_validation_class
         valid = login_valid_object.login_check(login_valid_object, form)
         if(valid):
-            return render(request, 'LeftNav.html')
+            return render(request, 'Dashboard.html')
         return render(request, 'login.jsp', {'login_form': form, 'login_fail':''})
     # if a GET (or any other method) we'll create a blank form
     else:

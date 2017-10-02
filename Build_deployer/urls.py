@@ -13,7 +13,9 @@ urlpatterns = [
     url(r'^login.jsp$', views.login_validation),
     url(r'^temp$', views.TemplatesView.as_view()),
     url(r'^test$', views.TestView.as_view()),
-    url(r'^FileProf.html$', views.FileProfPageView.as_view())
+    url(r'^CygFileProf.html$', views.CygnetFileProfPageView.as_view()),
+    url(r'^M6FileProf.html$', views.M6FileProfPageView.as_view()),
+    url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView.as_view()),
     #url(r'^about/$', views.AboutPageView.as_view()),
 #    url(r'^login_failed/$', views.login_validation),
  #   url(r'^get_login/$', views.get_name, name='get_name'),

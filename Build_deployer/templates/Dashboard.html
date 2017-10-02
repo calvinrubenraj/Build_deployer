@@ -23,6 +23,8 @@
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
+    <link href="/static/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css">
+    
     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -281,12 +283,12 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="#" class="faa-parent animated-hover"><i class="fa fa-dashboard faa-burst fa-fw"></i> Dashboard</a>
                         </li>
 
    
                         <li>
-                            <a href="#"><i class="fa fa-gears fa-fw"></i> Configure<span class="fa arrow"></span></a>
+                            <a href="#" class="faa-parent animated-hover"><i class="fa fa fa-cog faa-spin fa-fw"></i> Configure<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 						   <!-- <li>
                                     <a href="#">Second Level Item</a>
@@ -295,28 +297,39 @@
                                     <a href="#">Second Level Item</a>
                                 </li> -->
                                 <li>
-                                    <a href="javascript:replaceDiv('/build/login.jsp');"><i class="fa fa-file-text fa-fw"></i> File profile</a>
+                                    <a href="#" class="faa-parent animated-hover"><i class="fa fa-file-text faa-pulse fa-fw"></i> File profile<span class="fa arrow"></a>
+									<ul class="nav nav-third-level">
+										<li>
+											<a href="javascript:replaceDiv('/build/CygFileProf.html');" class="faa-parent animated-hover"><i class="fa fa-contao faa-shake fa-fw"></i>Cygnet File profile</a>
+										</li>
+										<li>
+											<a href="javascript:replaceDiv('/build/M6FileProf.html');" class="faa-parent animated-hover"><i class="fa fa-maxcdn faa-passing fa-fw"></i>M6 File profile</a>
+										</li>
+										<li>
+											<a href="javascript:replaceDiv('/build/M6EnctFileProf.html');" class="faa-parent animated-hover"><i class="fa fa-medium faa-flash fa-fw"></i>M6 Encrypt File profile</a>
+										</li>
+									</ul>
                                 </li>
                                 <li>
-                                    <a href="javascript:replaceDiv('/build/login.jsp');"><i class="fa fa-copy fa-fw"></i> SSH profile</a>
+                                    <a href="javascript:replaceDiv('/build/login.jsp');" class="faa-parent animated-hover"><i class="fa fa-copy faa-burst fa-fw"></i> SSH profile</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-rocket fa-fw"></i> Build Deploy</a>
+                                    <a href="#" class="faa-parent animated-hover"><i class="fa fa-rocket faa-float fa-fw"></i> Build Deploy</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                        	<a href="#"><i class="fa fa-gears fa-fw"></i> Connectivity test<span class="fa arrow"></a>
+                        	<a href="#" class="faa-parent animated-hover"><i class="fa fa-spinner faa-spin fa-fw"></i> Connectivity test<span class="fa arrow"></a>
                             <ul class="nav nav-second-level">
                             	<li>
-                                    <a href="javascript:replaceDiv('/build/login.jsp');"><i class="fa fa-bullseye fa-fw"></i> Ping check</a>
+                                    <a href="javascript:replaceDiv('/build/login.jsp');" class="faa-parent animated-hover"><i class="fa fa-bullseye faa-burst fa-fw"></i> Ping check</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:replaceDiv('/build/login.jsp');"><i class="fa fa-file-text fa-fw"></i> ssh check</a>
+                                    <a href="javascript:replaceDiv('/build/login.jsp');" class="faa-parent animated-hover"><i class="fa fa-file-text faa-horizontal fa-fw"></i> ssh check</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:replaceDiv('/build/login.jsp');"><i class="fa fa-database fa-fw"></i> DB check</a>
+                                    <a href="javascript:replaceDiv('/build/login.jsp');" class="faa-parent animated-hover"><i class="fa fa-database faa-pulse fa-fw"></i> DB check</a>
                                 </li>
                             </ul>
                         </li>
