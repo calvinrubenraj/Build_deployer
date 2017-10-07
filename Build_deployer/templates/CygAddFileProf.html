@@ -1,14 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+<style type="text/css">
+    .popover{
+        max-width:500px;
+    }
+</style>
+
 <div class="panel panel-default">
-	<div class="panel-heading">Cygnet File profile</div>
+	<div class="panel-heading" align="center">
+<!-- 		<div class="col-lg-6" align="center"> -->
+			Cygnet File profile
+<!-- 		</div> -->
+	</div>
 	<div class="panel-body">
 		<div class="col-lg-6" align="center">
-			<input class="form-control" placeholder="Profile Name" id="cygusername" /> 
-			<input class="form-control" placeholder="Url" id="cygurl" /> 
-			<input class="form-control" placeholder="IP" id="cygip" /> 
-			<input class="form-control" placeholder="Port" id="cygport" />
+			<ul>
+				<input id="cygprfname" class="form-control" placeholder="Profile Name" title="Example"/>
+			</ul>
+			<ul>
+				<input id="cygurl" class="form-control" placeholder="Url" disabled=''/>
+			</ul>
+			<ul>
+				<div class="checkbox">
+	            	<label>
+	            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
+	                </label>
+	            </div>
+            </ul>
+			<ul>
+				<input class="form-control" placeholder="IP" id="cygip"/>
+			</ul>
+			<ul>
+				<input class="form-control" placeholder="Port" id="cygport" />
+			</ul>
+			<ul>
+				<input class="form-control" placeholder="SID" id="cygsid"/>
+			</ul>
+			<ul>
+				<input class="form-control" placeholder="Cygnet DB User Name" id="cygusername"/>
+			</ul>
+			<ul>
+				<input class="form-control" placeholder="Cygnet DB Password" id="cygpassword"/>
+			</ul>
 		</div>
 	</div>
 </div>
+<script>
+function checkurl(checkid) {
+    var urlcheck = document.getElementById(checkid).checked;
+    var disarr = ["cygip","cygport","cygsid"];
+    var arrlen = disarr.length;
+    var urlid = "cygurl"
+
+    if (urlcheck == false) {
+    	document.getElementById(urlid).disabled='disabled';
+    	document.getElementById(urlid).value='';
+    	for(i=0; i<arrlen; i++){
+    		document.getElementById(disarr[i]).disabled='';
+    	}
+    }
+    else{
+    	document.getElementById(urlid).disabled='';
+    	for(i=0; i<arrlen; i++){
+    		document.getElementById(disarr[i]).disabled='disabled';
+    		document.getElementById(disarr[i]).value='';
+    	}
+    }
+}
+
+$(document).ready(function(){
+var statimg="/static/images/"
+var ftime=6000
+var totjson=6
+var jsonpopover={"1":{"fpopid":"#cygurl","fimg1":"urlexample.png","fimg2":"url_field_eg.png"},
+				 "2":{"fpopid":"#cygip","fimg1":"urlexample.png","fimg2":"ip_field.png"},
+				 "3":{"fpopid":"#cygport","fimg1":"urlexample.png","fimg2":"port_field.png"},
+				 "4":{"fpopid":"#cygsid","fimg1":"urlexample.png","fimg2":"sid_field.png"},
+				 "5":{"fpopid":"#cygusername","fimg1":"usrexample.png","fimg2":"usr_field.png"},
+				 "6":{"fpopid":"#cygpassword","fimg1":"passexample.png","fimg2":"pass_field.png"}
+				 }
+
+
+function popoverfun(popid, img1, img2, time) {
+	var disablecheck = $(popid).is(':disabled')
+	
+	popovervalue = {
+		placement : 'right',
+		html : true,
+		content : '<div class="media"><img src=' + statimg + img1 +' alt="Cygnet url Image"><p>For above sample enter the field as below</p><img src=' + statimg + img2 + ' alt="Cygnet url Image"></div>'
+	}
+	
+//	if(disablecheck == false){
+		$(popid).popover(popovervalue);
+	
+		$(popid).click(function() {
+			setTimeout(function() {
+				$('.popover').fadeOut('slow');
+			}, time);
+		});
+//	}
+}
+
+for (i = 1; i <= totjson; i++) {
+	stri = i.toString();
+	tid = jsonpopover[stri]["fpopid"];
+	timg1 = jsonpopover[stri]["fimg1"];
+	timg2 = jsonpopover[stri]["fimg2"];
+	popoverfun(tid, timg1, timg2, ftime);
+	}
+
+});
+</script>
 </html>
