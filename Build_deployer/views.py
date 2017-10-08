@@ -19,7 +19,10 @@ class M6FileProfPageView(TemplateView):
     template_name = "M6FileProf.html"
     
 class M6EncrptyFileProfPageView(TemplateView):
-    template_name = "M6EnctFileProf.html"    
+    template_name = "M6EnctFileProf.html" 
+    
+class CygnetAddFileProfPageView(TemplateView):
+    template_name = "CygAddFileProf.html"   
     
 class TemplatesView(TemplateView):
     template_name = "LeftNav.html"

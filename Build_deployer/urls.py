@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^CygFileProf.html$', views.CygnetFileProfPageView.as_view()),
     url(r'^M6FileProf.html$', views.M6FileProfPageView.as_view()),
     url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView.as_view()),
+    url(r'^CygAddFileProf.html$', views.CygnetAddFileProfPageView.as_view()),
     #url(r'^about/$', views.AboutPageView.as_view()),
 #    url(r'^login_failed/$', views.login_validation),
  #   url(r'^get_login/$', views.get_name, name='get_name'),
