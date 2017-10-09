@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<link href="/static/css/bootstrap-toggle.min.css" rel="stylesheet" type="text/css">
 <style type="text/css">
     .popover{
         max-width:500px;
     }
+    
+   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; } 
+   .toggle.ios .toggle-handle { border-radius: 20px; } 
+   
 </style>
 
 <div class="panel panel-default">
@@ -13,38 +18,42 @@
 <!-- 		</div> -->
 	</div>
 	<div class="panel-body">
+		<div class="checkbox" align="right">
+		  	<label>
+		  		<input id="help" checked data-toggle="toggle" data-style="ios" data-offstyle="danger" type="checkbox"  checked=''>
+				<b>help</b>
+				<br>
+			</label>
+		</div>
 		<div class="col-lg-6" align="center">
-			<ul>
 				<input id="cygprfname" class="form-control" placeholder="Profile Name" title="Example"/>
-			</ul>
-			<ul>
-				<input id="cygurl" class="form-control" placeholder="Url" disabled=''/>
-			</ul>
-			<ul>
+			<br>
+				<input id="cygurl" class="form-control" placeholder="Url" disabled=""/>
+			<br>
 				<div class="checkbox">
 	            	<label>
 	            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
 	                </label>
 	            </div>
-            </ul>
-			<ul>
-				<input class="form-control" placeholder="IP" id="cygip"/>
-			</ul>
-			<ul>
-				<input class="form-control" placeholder="Port" id="cygport" />
-			</ul>
-			<ul>
-				<input class="form-control" placeholder="SID" id="cygsid"/>
-			</ul>
-			<ul>
-				<input class="form-control" placeholder="Cygnet DB User Name" id="cygusername"/>
-			</ul>
-			<ul>
-				<input class="form-control" placeholder="Cygnet DB Password" id="cygpassword"/>
-			</ul>
+            <br>
+				<input class="form-control" placeholder="IP" id="cygip" data-trigger="focus"/>
+			<br>
+				<input class="form-control" placeholder="Port" id="cygport" data-trigger="focus"/>
+			<br>
+				<input class="form-control" placeholder="SID" id="cygsid" data-trigger="focus"/>
+			<br>
+				<input class="form-control" placeholder="Cygnet DB User Name" id="cygusername" data-trigger="focus"/>
+			<br>
+				<input class="form-control" placeholder="Cygnet DB Password" id="cygpassword" data-trigger="focus"/>
+			<br>
+			<div class="row">
+					<button type="submit" class="btn btn-success"><b>ADD</b></button>
+					<button class="btn btn-danger"><b>CANCLE</b></button>
+			</div>
 		</div>
 	</div>
 </div>
+<script src="/static/js/bootstrap-toggle.min.js"></script>
 <script>
 function checkurl(checkid) {
     var urlcheck = document.getElementById(checkid).checked;
@@ -69,45 +78,85 @@ function checkurl(checkid) {
 }
 
 $(document).ready(function(){
-var statimg="/static/images/"
-var ftime=6000
-var totjson=6
-var jsonpopover={"1":{"fpopid":"#cygurl","fimg1":"urlexample.png","fimg2":"url_field_eg.png"},
-				 "2":{"fpopid":"#cygip","fimg1":"urlexample.png","fimg2":"ip_field.png"},
-				 "3":{"fpopid":"#cygport","fimg1":"urlexample.png","fimg2":"port_field.png"},
-				 "4":{"fpopid":"#cygsid","fimg1":"urlexample.png","fimg2":"sid_field.png"},
-				 "5":{"fpopid":"#cygusername","fimg1":"usrexample.png","fimg2":"usr_field.png"},
-				 "6":{"fpopid":"#cygpassword","fimg1":"passexample.png","fimg2":"pass_field.png"}
-				 }
+	var statimg="/static/images/"
+	var ftime=6000
+	var totjson=6
+	var jsonpopover={"1":{"fpopid":"#cygurl","fimg1":"urlexample.png","fimg2":"url_field_eg.png"},
+					 "2":{"fpopid":"#cygip","fimg1":"urlexample.png","fimg2":"ip_field.png"},
+					 "3":{"fpopid":"#cygport","fimg1":"urlexample.png","fimg2":"port_field.png"},
+					 "4":{"fpopid":"#cygsid","fimg1":"urlexample.png","fimg2":"sid_field.png"},
+					 "5":{"fpopid":"#cygusername","fimg1":"usrexample.png","fimg2":"usr_field.png"},
+					 "6":{"fpopid":"#cygpassword","fimg1":"passexample.png","fimg2":"pass_field.png"}
+					 }
 
-
-function popoverfun(popid, img1, img2, time) {
-	var disablecheck = $(popid).is(':disabled')
-	
-	popovervalue = {
-		placement : 'right',
-		html : true,
-		content : '<div class="media"><img src=' + statimg + img1 +' alt="Cygnet url Image"><p>For above sample enter the field as below</p><img src=' + statimg + img2 + ' alt="Cygnet url Image"></div>'
-	}
-	
-//	if(disablecheck == false){
+	//Single Element initate
+	function popoverfun(popid, img1, img2) {
+		popovervalue = {
+			placement : 'right',
+			html : true,
+			content : '<div class="media"><img src=' + statimg + img1 +' alt="Cygnet url Image"><p>For above sample enter the field as below</p><img src=' + statimg + img2 + ' alt="Cygnet url Image"></div>'
+		}
 		$(popid).popover(popovervalue);
 	
 		$(popid).click(function() {
 			setTimeout(function() {
 				$('.popover').fadeOut('slow');
-			}, time);
+			}, ftime);
 		});
-//	}
-}
-
-for (i = 1; i <= totjson; i++) {
-	stri = i.toString();
-	tid = jsonpopover[stri]["fpopid"];
-	timg1 = jsonpopover[stri]["fimg1"];
-	timg2 = jsonpopover[stri]["fimg2"];
-	popoverfun(tid, timg1, timg2, ftime);
 	}
+	
+	//Initiate the popover with all element 
+	function popoveractive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			timg1 = jsonpopover[stri]["fimg1"];
+			timg2 = jsonpopover[stri]["fimg2"];
+			popoverfun(tid, timg1, timg2);
+			}
+	}
+	
+	//Disable popover
+	function popoverinactive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			
+ 			$(tid).click(function() {
+ 				$('.popover').hide();
+ 			});
+		}
+	}
+	//Enable popover
+	function popoverreactive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			
+			$(tid).click(function() {
+				$('.popover').show();
+			});
+		}
+	}
+	
+	//script start here
+	popoveractive();
+	//default toggle state
+	$('#help').bootstrapToggle('off');
+	//default make popover n active 
+	popoverinactive();
+	
+	//While toggling the help button	
+	$('#help').change(function() {
+		if($('#help').prop('checked')){
+ 			popoverreactive();
+// 			window.alert("active");
+		}
+		else{
+			popoverinactive();
+		}
+	});
+	
 
 });
 </script>
