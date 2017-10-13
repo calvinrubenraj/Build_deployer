@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="/static/css/bootstrap-toggle.min.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    .popover{
+        max-width:500px;
+    }
+    
+   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; } 
+   .toggle.ios .toggle-handle { border-radius: 20px; } 
+   
+</style>
+
+<div class="panel panel-default">
+	<div class="panel-heading" align="center">
+<!-- 		<div class="col-lg-6" align="center"> -->
+			Cygnet File profile
+<!-- 		</div> -->
+	</div>
+	<div class="panel-body">
+		<div class="checkbox" align="right">
+		  	<label>
+		  		<input id="help" checked data-toggle="toggle" data-style="ios" data-offstyle="danger" type="checkbox"  checked=''>
+				<b>help</b>
+				<br>
+			</label>
+		</div>
+		<div class="col-lg-6" align="center">
+			<form class="form-horizontal" id="Cygaddprof" method="post" action="">
+				<div class="col-lg-12">	
+					<input id="cygprfname" name="cygprfname" class="form-control" placeholder="Profile Name" title="Example"/>
+				</div>
+
+				<div class="col-lg-12">
+					<input id="cygurl" class="form-control" name="cygurl" placeholder="Url" disabled=""/>
+				</div>
+
+				<div class="checkbox">
+	            	<label>
+	            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
+	                </label>
+	            </div>
+           
+	            <div class="col-lg-12">
+					<input class="form-control" placeholder="IP" name="cygip" id="cygip" data-trigger="focus"/>
+				</div>
+
+				<div class="col-lg-12">
+					<input class="form-control" placeholder="Port" name="cygport" id="cygport" data-trigger="focus"/>
+				</div>
+
+				<div class="valid">
+					<input class="form-control" placeholder="SID" name="cygsid" id="cygsid" data-trigger="focus"/>
+				</div>
+
+				<div class="valid">
+					<input class="form-control" placeholder="Cygnet DB User Name" name="cygusername" id="cygusername" data-trigger="focus"/>
+				</div>
+
+				<div class="valid">
+					<input type="text" class="form-control" placeholder="Cygnet DB Password" name="cygpassword" id="cygpassword" data-trigger="focus"/>
+				</div>
+
+				<div class="col-sm-6">
+						<button type="submit" class="btn btn-success"><b>ADD</b></button>
+				</div>
+				<div class="col-sm-6">
+						<button class="btn btn-danger"><b>CANCEL</b></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="/static/js/bootstrap-toggle.min.js"></script>
+
+<script>
+function checkurl(checkid) {
+    var urlcheck = document.getElementById(checkid).checked;
+    var disarr = ["cygip","cygport","cygsid"];
+    var arrlen = disarr.length;
+    var urlid = "cygurl"
+
+    if (urlcheck == false) {
+    	document.getElementById(urlid).disabled='disabled';
+    	document.getElementById(urlid).value='';
+    	for(i=0; i<arrlen; i++){
+    		document.getElementById(disarr[i]).disabled='';
+    	}
+    }
+    else{
+    	document.getElementById(urlid).disabled='';
+    	for(i=0; i<arrlen; i++){
+    		document.getElementById(disarr[i]).disabled='disabled';
+    		document.getElementById(disarr[i]).value='';
+    	}
+    }
+}
+
+
+
+$(document).ready(function(){
+	var statimg="/static/images/"
+	var ftime=6000
+	var totjson=6
+	var jsonpopover={"1":{"fpopid":"#cygurl","fimg1":"urlexample.png","fimg2":"url_field_eg.png"},
+					 "2":{"fpopid":"#cygip","fimg1":"urlexample.png","fimg2":"ip_field.png"},
+					 "3":{"fpopid":"#cygport","fimg1":"urlexample.png","fimg2":"port_field.png"},
+					 "4":{"fpopid":"#cygsid","fimg1":"urlexample.png","fimg2":"sid_field.png"},
+					 "5":{"fpopid":"#cygusername","fimg1":"usrexample.png","fimg2":"usr_field.png"},
+					 "6":{"fpopid":"#cygpassword","fimg1":"passexample.png","fimg2":"pass_field.png"}
+					 }
+
+	//Single Element initate
+	function popoverfun(popid, img1, img2) {
+		popovervalue = {
+			placement : 'right',
+			html : true,
+			content : '<div class="media"><img src=' + statimg + img1 +' alt="Cygnet url Image"><p>For above sample enter the field as below</p><img src=' + statimg + img2 + ' alt="Cygnet url Image"></div>'
+		}
+		$(popid).popover(popovervalue);
+	
+		$(popid).click(function() {
+			setTimeout(function() {
+				$('.popover').fadeOut('slow');
+			}, ftime);
+		});
+	}
+	
+	//Initiate the popover with all element 
+	function popoveractive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			timg1 = jsonpopover[stri]["fimg1"];
+			timg2 = jsonpopover[stri]["fimg2"];
+			popoverfun(tid, timg1, timg2);
+			}
+	}
+	
+	//Disable popover
+	function popoverinactive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			
+ 			$(tid).click(function() {
+ 				$('.popover').hide();
+ 			});
+		}
+	}
+	//Enable popover
+	function popoverreactive(){
+		for (i = 1; i <= totjson; i++) {
+			stri = i.toString();
+			tid = jsonpopover[stri]["fpopid"];
+			
+			$(tid).click(function() {
+				$('.popover').show();
+			});
+		}
+	}
+	
+	//script start here
+	popoveractive();
+	//default toggle state
+	$('#help').bootstrapToggle('off');
+	//default make popover n active 
+	popoverinactive();
+
+	//While toggling the help button	
+	$('#help').change(function() {
+		if($('#help').prop('checked')){
+ 			popoverreactive();
+// 			window.alert("active");
+		}
+		else{
+			popoverinactive();
+		}
+	});
+	
+	//validation	
+	$("#Cygaddprof").validate({
+		rules: {
+			cygprfname: {
+				required: true
+				//minlength: 2
+			},
+			cygurl: {
+				required: true
+				//minlength: 2
+			},
+			cygip: {
+				required: true
+				//minlength: 5
+			},
+			cygport: {
+				required: true
+				//minlength: 5,
+				//equalTo: "#password1"
+			},
+			cygsid: {
+				required: true
+				//email: true
+			},
+			cygusername: {
+				required: true
+			},
+			cygpassword: {
+				required: true
+			}
+		},
+		messages: {
+			cygprfname: {
+				required: "Please enter the cygnet db profile name"
+			},
+			cygurl: {
+				required: "Please enter cygnet db url"
+				//minlength: "Your username must consist of at least 2 characters"
+			},
+			cygip: {
+				required: "Please enter the cygnet db ip"
+				//minlength: "Your password must be at least 5 characters long"
+			},
+			cygport: {
+				required: "Please enter the cygnet db port"
+			},
+			cygsid: {
+				required: "Please enter the cygnet db SID"
+			},
+			cygusername: {
+				required: "Please enter the cygnet db username"
+			},
+			cygpassword: {
+				required: "Please enter the cygnet db password"
+			}
+		},
+		errorElement: "em",
+		errorPlacement: function ( error, element ) {
+			// Add the `help-block` class to the error element
+			error.addClass( "help-block" );
+
+			// Add `has-feedback` class to the parent div.form-group
+			// in order to add icons to inputs
+			element.parents( ".valid" ).addClass( "has-feedback" );
+
+			if ( element.prop( "type" ) === "checkbox" ) {
+				error.insertAfter( element.parent( "label" ) );
+			} else {
+				error.insertAfter( element );
+			}
+
+			// Add the span element, if doesn't exists, and apply the icon classes to it.
+			if ( !element.next( "span" )[ 0 ] ) {
+				$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+			}
+		},
+		success: function ( label, element ) {
+			// Add the span element, if doesn't exists, and apply the icon classes to it.
+			if ( !$( element ).next( "span" )[ 0 ] ) {
+				$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+			}
+		},
+		highlight: function ( element, errorClass, validClass ) {
+			$( element ).parents( ".valid" ).addClass( "has-error" ).removeClass( "has-success" );
+			$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+		},
+		unhighlight: function ( element, errorClass, validClass ) {
+			$( element ).parents( ".valid" ).addClass( "has-success" ).removeClass( "has-error" );
+			$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+		}
+	});
+	
+	
+});
+	
+</script>
+</html>
