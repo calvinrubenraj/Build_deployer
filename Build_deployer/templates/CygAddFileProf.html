@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="/static/css/bootstrap-toggle.min.css" rel="stylesheet" type="text/css">
+<!-- <link href="/static/css/bootstrap-toggle.min.css" rel="stylesheet" type="text/css">-->
 <style type="text/css">
     .popover{
         max-width:500px;
@@ -18,72 +18,60 @@
 <!-- 		</div> -->
 	</div>
 	<div class="panel-body">
-		<div class="checkbox" align="right">
-		  	<label>
-		  		<input id="help" checked data-toggle="toggle" data-style="ios" data-offstyle="danger" type="checkbox"  checked=''>
-				<b>help</b>
-				<br>
-			</label>
+		<div class="col-lg-6">
+			<form id="cygdbprofform" method="post" class="form-horizontal" action="">
+				<div class="form-group">
+					<div class="col-lg-11">	
+						<input id="cygprfname" name="cygprfname" class="form-control" placeholder="Profile Name" title="Example"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input id="cygurl" class="form-control" name="cygurl" placeholder="Url" disabled="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+		            	<label>
+		            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
+		                </label>
+		            </div>
+	            </div>
+			    <div class="form-group">       
+		            <div class="col-lg-11">
+						<input type="text" class="form-control" placeholder="IP" name="cygip" id="cygip" required valid-name />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input class="form-control" placeholder="Port" name="cygport" id="cygport" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input class="form-control" placeholder="SID" name="cygsid" id="cygsid" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input class="form-control" placeholder="Cygnet DB User Name" name="cygusername" id="cygusername" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input type="text" class="form-control" placeholder="Cygnet DB Password" name="cygpassword" id="cygpassword" />
+					</div>
+				</div>
+				<div class="form-group" align="center">
+					<div class="col-sm-6">
+							<button type="submit" class="btn btn-success"><b>ADD</b></button>
+					</div>
+					<div class="col-sm-6">
+							<button class="btn btn-danger"><b>CANCEL</b></button>
+					</div>
+				</div>
+			</form>
 		</div>
-		<form id="signupForm1" method="post" class="form-horizontal" action="">
-							<div class="form-group">
-								<!-- <label class="col-sm-4 control-label" for="firstname1">First name</label>-->
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="firstname1" name="firstname1" placeholder="First name" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="lastname1">Last name</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="lastname1" name="lastname1" placeholder="Last name" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="username1">Username</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="username1" name="username1" placeholder="Username" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="email1">Email</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="email1" name="email1" placeholder="Email" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="password1">Password</label>
-								<div class="col-sm-5">
-									<input type="password" class="form-control" id="password1" name="password1" placeholder="Password" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="confirm_password1">Confirm password</label>
-								<div class="col-sm-5">
-									<input type="password" class="form-control" id="confirm_password1" name="confirm_password1" placeholder="Confirm password" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-5 col-sm-offset-4">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" id="agree1" name="agree1" value="agree" />Please agree to our policy
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-9 col-sm-offset-4">
-									<button type="submit" class="btn btn-primary" name="signup1" value="Sign up">Sign up</button>
-								</div>
-							</div>
-						</form>
 	</div>
 </div>
 <script src="/static/js/bootstrap-toggle.min.js"></script>
@@ -113,164 +101,136 @@ function checkurl(checkid) {
 
 
 
-$(document).ready(function(){
-	var statimg="/static/images/"
-	var ftime=6000
-	var totjson=6
-	var jsonpopover={"1":{"fpopid":"#cygurl","fimg1":"urlexample.png","fimg2":"url_field_eg.png"},
-					 "2":{"fpopid":"#cygip","fimg1":"urlexample.png","fimg2":"ip_field.png"},
-					 "3":{"fpopid":"#cygport","fimg1":"urlexample.png","fimg2":"port_field.png"},
-					 "4":{"fpopid":"#cygsid","fimg1":"urlexample.png","fimg2":"sid_field.png"},
-					 "5":{"fpopid":"#cygusername","fimg1":"usrexample.png","fimg2":"usr_field.png"},
-					 "6":{"fpopid":"#cygpassword","fimg1":"passexample.png","fimg2":"pass_field.png"}
-					 }
-
-	//Single Element initate
-	function popoverfun(popid, img1, img2) {
-		popovervalue = {
-			placement : 'right',
-			html : true,
-			content : '<div class="media"><img src=' + statimg + img1 +' alt="Cygnet url Image"><p>For above sample enter the field as below</p><img src=' + statimg + img2 + ' alt="Cygnet url Image"></div>'
-		}
-		$(popid).popover(popovervalue);
+$(document).ready(function(){	
 	
-		$(popid).click(function() {
-			setTimeout(function() {
-				$('.popover').fadeOut('slow');
-			}, ftime);
-		});
-	}
-	
-	//Initiate the popover with all element 
-	function popoveractive(){
-		for (i = 1; i <= totjson; i++) {
-			stri = i.toString();
-			tid = jsonpopover[stri]["fpopid"];
-			timg1 = jsonpopover[stri]["fimg1"];
-			timg2 = jsonpopover[stri]["fimg2"];
-			popoverfun(tid, timg1, timg2);
+	 /* $.validator.addMethod('IP4Checker', function(value) 
+			 {
+         var ip = "/^[0-9]$/";
+         alert("in");
+             return value.match(ip);
+         }, 'Invalid IP address');  */
+         
+         jQuery.validator.addMethod("IP4Checker", function(value, element) {
+        	    return this.optional(element) || /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/.test(value);
+        	}, "");
+     
+	 
+	//validation	
+	$("#cygdbprofform").validate({
+		
+		rules: {
+			cygprfname: {
+				required: true,
+				minlength: 4
+			},
+			cygurl: {
+				required: true
+				//minlength: 2
+			},
+  			cygip: {
+	  				required: true,
+	  				IP4Checker:true/* ,
+					minlength: 6,
+					pattern: /^\S*$/ */
+ 	 		    
+ 				//minlength: 5
+ 			},
+ 			
+  	       /*  validName: function (input) {
+    	          if (input.is('[valid-name]')) {
+    	            var value = input.val();
+    	            
+    	            return value === "" ||
+    	              value === "raja";
+    	          }
+    	    
+    	          return true;
+    	        }, */
+ 			
+			cygport: {
+				required: true,
+				number: true
+				//minlength: 5,
+				//equalTo: "#password1"
+			},
+			cygsid: {
+				required: true
+				//email: true
+			},
+			cygusername: {
+				required: true
+			},
+			cygpassword: {
+				required: true
 			}
-	}
-	
-	//Disable popover
-	function popoverinactive(){
-		for (i = 1; i <= totjson; i++) {
-			stri = i.toString();
-			tid = jsonpopover[stri]["fpopid"];
-			
- 			$(tid).click(function() {
- 				$('.popover').hide();
- 			});
-		}
-	}
-	//Enable popover
-	function popoverreactive(){
-		for (i = 1; i <= totjson; i++) {
-			stri = i.toString();
-			tid = jsonpopover[stri]["fpopid"];
-			
-			$(tid).click(function() {
-				$('.popover').show();
-			});
-		}
-	}
-	
-	//script start here
-	popoveractive();
-	//default toggle state
-	$('#help').bootstrapToggle('off');
-	//default make popover n active 
-	popoverinactive();
+		},
+		messages: {
+			cygprfname: {
+				required: "Please enter the cygnet db profile name",
+				minlength: "Minimum 4 character"
+			},
+			cygurl: {
+				required: "Please enter cygnet db url (eg: 10.5.185.214:1908:IPTSTDRS)"
+				//minlength: "Your username must consist of at least 2 characters"
+			},
+  			cygip: {
+  				required: "Please enter the cygnet db ip",
+ 				IP4Checker: "Please enter the ip formate"
+ 				//minlength: "Your password must be at least 5 characters long"
+  			}, 
+  			/* cygip:{
+		  			validName: "raja is the only valid name",
+  			}, */
+			cygport: {
+				required: "Please enter the cygnet db port",
+				number: "Port should be number "
+			},
+			cygsid: {
+				required: "Please enter the cygnet db SID"
+			},
+			cygusername: {
+				required: "Please enter the cygnet db username"
+			},
+			cygpassword: {
+				required: "Please enter the cygnet db password"
+			}
+		},
+		
+		errorElement: "em",
+		errorPlacement: function ( error, element ) {
+			// Add the `help-block` class to the error element
+			error.addClass( "help-block" );
 
-	//While toggling the help button	
-	$('#help').change(function() {
-		if($('#help').prop('checked')){
- 			popoverreactive();
-// 			window.alert("active");
-		}
-		else{
-			popoverinactive();
+			// Add `has-feedback` class to the parent div.form-group
+			// in order to add icons to inputs
+			element.parents( ".col-lg-11" ).addClass( "has-feedback" );
+
+			if ( element.prop( "type" ) === "checkbox" ) {
+				error.insertAfter( element.parent( "label" ) );
+			} else {
+				error.insertAfter( element );
+			}
+
+			// Add the span element, if doesn't exists, and apply the icon classes to it.
+			if ( !element.next( "span" )[ 0 ] ) {
+				$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+			}
+		},
+		success: function ( label, element ) {
+			// Add the span element, if doesn't exists, and apply the icon classes to it.
+			if ( !$( element ).next( "span" )[ 0 ] ) {
+				$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+			}
+		},
+		highlight: function ( element, errorClass, validClass ) {
+			$( element ).parents( ".col-lg-11" ).addClass( "has-error" ).removeClass( "has-success" );
+			$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+		},
+		unhighlight: function ( element, errorClass, validClass ) {
+			$( element ).parents( ".col-lg-11" ).addClass( "has-success" ).removeClass( "has-error" );
+			$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
 		}
 	});
-	
-	//validation	
-	$( "#signupForm1" ).validate( {
-				rules: {
-					firstname1: "required",
-					lastname1: "required",
-					username1: {
-						required: true,
-						minlength: 2
-					},
-					password1: {
-						required: true,
-						minlength: 5
-					},
-					confirm_password1: {
-						required: true,
-						minlength: 5,
-						equalTo: "#password1"
-					},
-					email1: {
-						required: true,
-						email: true
-					},
-					agree1: "required"
-				},
-				messages: {
-					firstname1: "Please enter your firstname",
-					lastname1: "Please enter your lastname",
-					username1: {
-						required: "Please enter a username",
-						minlength: "Your username must consist of at least 2 characters"
-					},
-					password1: {
-						required: "Please provide a password",
-						minlength: "Your password must be at least 5 characters long"
-					},
-					confirm_password1: {
-						required: "Please provide a password",
-						minlength: "Your password must be at least 5 characters long",
-						equalTo: "Please enter the same password as above"
-					},
-					email1: "Please enter a valid email address",
-					agree1: "Please accept our policy"
-				},
-				errorElement: "em",
-				errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
-					error.addClass( "help-block" );
-
-					// Add `has-feedback` class to the parent div.form-group
-					// in order to add icons to inputs
-					element.parents( ".col-sm-5" ).addClass( "has-feedback" );
-
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.parent( "label" ) );
-					} else {
-						error.insertAfter( element );
-					}
-
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !element.next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-					}
-				},
-				success: function ( label, element ) {
-					// Add the span element, if doesn't exists, and apply the icon classes to it.
-					if ( !$( element ).next( "span" )[ 0 ] ) {
-						$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-					$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-					$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-				},
-				unhighlight: function ( element, errorClass, validClass ) {
-					$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-					$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-				}
-			} );
 	
 	
 });
