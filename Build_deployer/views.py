@@ -23,6 +23,12 @@ class M6EncrptyFileProfPageView(TemplateView):
     
 class CygnetAddFileProfPageView(TemplateView):
     template_name = "CygAddFileProf.html"   
+  
+class M6AddFileProfPageView(TemplateView):
+    template_name = "M6AddFileProf.html"  
+    
+class M6EnctAddFileProfPageView(TemplateView):
+    template_name = "M6EnctAddFileProf.html"    
     
 class TemplatesView(TemplateView):
     template_name = "LeftNav.html"
@@ -35,6 +41,7 @@ def login_validation(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = LoginForm(request.POST)
+        print(form)
         login_valid_object=login_validation_class
         valid = login_valid_object.login_check(login_valid_object, form)
         if(valid):
@@ -44,3 +51,11 @@ def login_validation(request):
     else:
         form = LoginForm()
         return render(request, 'login.jsp', {'login_form': form,'login_fail':'hidden'})
+    
+def cyg_add_prof_validation(request):
+    if request.method == 'POST':
+        #get form value to save in db
+        cygaddvaldir=request.POST.get
+        print(cygaddvaldir)
+        return render(request, 'Dashboard.html')
+    

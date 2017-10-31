@@ -1,0 +1,17 @@
+Required package:
+	Django
+	pymongo
+	six
+	mongoengine
+	
+Add following line in setting.py
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.dummy'
+	    }
+	}
+	AUTHENTICATION_BACKENDS = (
+	    'mongoengine.django.auth.MongoEngineBackend',
+	)
+	from mongoengine import *
+    connect('database_name', host='host_ip',  port=27017

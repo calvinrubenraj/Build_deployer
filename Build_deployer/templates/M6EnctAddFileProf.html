@@ -14,53 +14,52 @@
 <div class="panel panel-default">
 	<div class="panel-heading" align="center">
 <!-- 		<div class="col-lg-6" align="center"> -->
-			Add Cygnet File profile
+			Add M6 Encrypt File profile
 <!-- 		</div> -->
 	</div>
 	<div class="panel-body">
 		<div class="col-lg-6">
-			<form id="cygdbprofform" method="post" class="form-horizontal" action="/build/CygAddFileVal">
-				{% csrf_token %}
+			<form id="m6enctdbprofform" method="post" class="form-horizontal" action="">
 				<div class="form-group">
 					<div class="col-lg-11">	
-						<input id="cygprfname" name="cygprfname" class="form-control" placeholder="Profile Name"/>
+						<input id="m6enctprfname" name="m6enctprfname" class="form-control" placeholder="Profile Name" title="Example"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input id="cygurl" class="form-control" name="cygurl" placeholder="Url" disabled="" />
+						<input id="m6encturl" class="form-control" name="m6encturl" placeholder="Url" disabled="" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="checkbox">
 		            	<label>
-		            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
+		            		<input id="m6encturlcheck" value="" type="checkbox" onclick="checkurl('m6encturlcheck');">Enable URL Field
 		                </label>
 		            </div>
 	            </div>
 			    <div class="form-group">       
 		            <div class="col-lg-11">
-						<input type="text" class="form-control" placeholder="IP" name="cygip" id="cygip" required valid-name />
+						<input type="text" class="form-control" placeholder="IP" name="m6enctip" id="m6enctip" required valid-name />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input class="form-control" placeholder="Port" name="cygport" id="cygport" />
+						<input class="form-control" placeholder="Port" name="m6enctport" id="m6enctport" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input class="form-control" placeholder="SID" name="cygsid" id="cygsid" />
+						<input class="form-control" placeholder="SID" name="m6enctsid" id="m6enctsid" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input class="form-control" placeholder="Cygnet DB User Name" name="cygusername" id="cygusername" />
+						<input class="form-control" placeholder="M6 Encrypt DB User Name" name="m6enctusername" id="m6enctusername" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input type="text" class="form-control" placeholder="Cygnet DB Password" name="cygpassword" id="cygpassword" />
+						<input type="text" class="form-control" placeholder="M6 Encrypt DB Password" name="m6enctpassword" id="m6enctpassword" />
 					</div>
 				</div>
 				<div class="form-group" align="center">
@@ -80,9 +79,9 @@
 <script>
 function checkurl(checkid) {
     var urlcheck = document.getElementById(checkid).checked;
-    var disarr = ["cygip","cygport","cygsid"];
+    var disarr = ["m6enctip","m6enctport","m6enctsid"];
     var arrlen = disarr.length;
-    var urlid = "cygurl"
+    var urlid = "m6encturl"
 
     if (urlcheck == false) {
     	document.getElementById(urlid).disabled='disabled';
@@ -117,18 +116,18 @@ $(document).ready(function(){
      
 	 
 	//validation	
-	$("#cygdbprofform").validate({
+	$("#m6enctdbprofform").validate({
 		
 		rules: {
-			cygprfname: {
+			m6enctprfname: {
 				required: true,
 				minlength: 4
 			},
-			cygurl: {
+			m6encturl: {
 				required: true
 				//minlength: 2
 			},
-  			cygip: {
+  			m6enctip: {
 	  				required: true,
 	  				IP4Checker:true/* ,
 					minlength: 6,
@@ -148,52 +147,52 @@ $(document).ready(function(){
     	          return true;
     	        }, */
  			
-			cygport: {
+			m6enctport: {
 				required: true,
 				number: true
 				//minlength: 5,
 				//equalTo: "#password1"
 			},
-			cygsid: {
+			m6enctsid: {
 				required: true
 				//email: true
 			},
-			cygusername: {
+			m6enctusername: {
 				required: true
 			},
-			cygpassword: {
+			m6enctpassword: {
 				required: true
 			}
 		},
 		messages: {
-			cygprfname: {
-				required: "Please enter the cygnet db profile name",
+			m6enctprfname: {
+				required: "Please enter the M6 Encrypt db profile name",
 				minlength: "Minimum 4 character"
 			},
-			cygurl: {
-				required: "Please enter cygnet db url (eg: 10.5.185.214:1908:IPTSTDRS)"
+			m6encturl: {
+				required: "Please enter M6 Encrypt db url (eg: 10.5.185.214:1908:IPTSTDRS)"
 				//minlength: "Your username must consist of at least 2 characters"
 			},
-  			cygip: {
-  				required: "Please enter the cygnet db ip",
+  			m6enctip: {
+  				required: "Please enter the M6 Encrypt db ip",
  				IP4Checker: "Please enter the ip formate"
  				//minlength: "Your password must be at least 5 characters long"
   			}, 
-  			/* cygip:{
+  			/* m6enctip:{
 		  			validName: "raja is the only valid name",
   			}, */
-			cygport: {
-				required: "Please enter the cygnet db port",
+			m6enctport: {
+				required: "Please enter the M6 Encrypt db port",
 				number: "Port should be number "
 			},
-			cygsid: {
-				required: "Please enter the cygnet db SID"
+			m6enctsid: {
+				required: "Please enter the M6 Encrypt db SID"
 			},
-			cygusername: {
-				required: "Please enter the cygnet db username"
+			m6enctusername: {
+				required: "Please enter the M6 Encrypt db username"
 			},
-			cygpassword: {
-				required: "Please enter the cygnet db password"
+			m6enctpassword: {
+				required: "Please enter the M6 Encrypt db password"
 			}
 		},
 		
