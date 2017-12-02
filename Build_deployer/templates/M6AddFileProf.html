@@ -20,6 +20,7 @@
 	<div class="panel-body">
 		<div class="col-lg-6">
 			<form id="m6dbprofform" method="post" class="form-horizontal" action="">
+				{% csrf_token %}
 				<div class="form-group">
 					<div class="col-lg-11">	
 						<input id="m6prfname" name="m6prfname" class="form-control" placeholder="Profile Name"/>

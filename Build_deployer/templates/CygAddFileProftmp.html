@@ -72,17 +72,21 @@
 					</div>
 				</div>
 			</form>
+			<input type="hidden" id="proflistjs" name="variable" value={{proflist}}>
 		</div>
 	</div>
 </div>
 <script src="/static/js/bootstrap-toggle.min.js"></script>
 
-<script>
+<script type="text/javascript">
+
+
 function checkurl(checkid) {
     var urlcheck = document.getElementById(checkid).checked;
     var disarr = ["cygip","cygport","cygsid"];
     var arrlen = disarr.length;
     var urlid = "cygurl"
+    
 
     if (urlcheck == false) {
     	document.getElementById(urlid).disabled='disabled';
@@ -103,7 +107,10 @@ function checkurl(checkid) {
 
 
 $(document).ready(function(){	
-	
+	var proflistjs = document.getElementById("proflistjs").value;
+	console.log(proflistjs);
+	window.alert("hello");
+		
 	 /* $.validator.addMethod('IP4Checker', function(value) 
 			 {
          var ip = "/^[0-9]$/";

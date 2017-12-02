@@ -72,6 +72,7 @@
 					</div>
 				</div>
 			</form>
+			<!-- <input type="hidden" class="proflist" value='{{proflist}}' />-->
 		</div>
 	</div>
 </div>
@@ -103,18 +104,37 @@ function checkurl(checkid) {
 
 
 $(document).ready(function(){	
+	//var proflisting = document.querySelector(".proflist").value;
+	//var profsplit = proflisting.split(",");
+	var proflisting = {{proflist | safe}};
+	console.log(proflisting);
+/* 	console.log(proflisting);
+	var test = JSON.stringify(proflisting);
+	console.log(test);
+	test = JSON.parse(test);
+	console.log(test[0]); */
+	/* var tester="[\"'test\"',\"'test 1\"']";
+	console.log(tester);
+	test = JSON.parse(tester);
+	console.log(test[0]); */
 	
-	 /* $.validator.addMethod('IP4Checker', function(value) 
-			 {
-         var ip = "/^[0-9]$/";
-         alert("in");
-             return value.match(ip);
-         }, 'Invalid IP address');  */
          
          jQuery.validator.addMethod("IP4Checker", function(value, element) {
         	    return this.optional(element) || /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/.test(value);
         	}, "");
-     
+     	 
+         jQuery.validator.addMethod("Profnamevalid", function(value, element) {
+	        	 /* for (var i=0; i<proflisting.length; i++) {
+;
+        		    if (value === proflisting[i]) {
+        		        return false
+        		    }
+        		}
+        	 return true */
+        	 //return !(proflisting.indexOf(value) === -1);
+        	 //console.log($.inArray(value, proflisting))
+        	 return ($.inArray(value, proflisting) === -1);
+     		}, "");
 	 
 	//validation	
 	$("#cygdbprofform").validate({
@@ -122,6 +142,7 @@ $(document).ready(function(){
 		rules: {
 			cygprfname: {
 				required: true,
+				Profnamevalid:true,
 				minlength: 4
 			},
 			cygurl: {
@@ -168,6 +189,7 @@ $(document).ready(function(){
 		messages: {
 			cygprfname: {
 				required: "Please enter the cygnet db profile name",
+				Profnamevalid:"Profile already exist",
 				minlength: "Minimum 4 character"
 			},
 			cygurl: {

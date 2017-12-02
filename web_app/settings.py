@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Web application project Build_deployer
-    'Build_deployer'
+    'Build_deployer',
+    'django_tables2'
 ]
 
 MIDDLEWARE = [

@@ -25,7 +25,8 @@
     
     <link href="/static/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css">
     
-	<link href="/static/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    
     
     
     
@@ -363,8 +364,11 @@
             <div class="container-fluid">
                 <div class="row">
                     
-                        <div id="replace"></div>
-              
+                        <div id="replace">
+                        	<div align="center" style="margin-top:15%">
+                           	{{result}} : <a href="javascript:replaceDiv('{{location}}');">Click here</a>
+                        	</div>
+              			</div>	
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
@@ -389,10 +393,9 @@
     <script src="/static/js/sb-admin-2.js"></script>
     
     <script src="/static/js/jquery.validate.js"></script>
+    
     <script src="/static/js/bootstrap-table.min.js"></script>
     <script src="/static/js/bootstrap-table-locale-all.min.js"></script>
-    
-    
     <!-- Jquery validate -->
 <!--     <script src="/static/js/jquery.validate.js"></script> -->
     <!-- toggle button -->

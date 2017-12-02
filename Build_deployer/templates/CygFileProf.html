@@ -19,21 +19,14 @@
                         <div class="panel-body">
 							 <div class="table-responsive">
 							 	<p class="text-right">
-							 	     <button type="button" onclick="replaceDiv('/build/CygAddFileProf.html')" class="btn btn-success btn-circle btn-lg">
-							 	     <i class="fa fa-plus"></i>
-                           			</button>
+							 		<button type="button" onclick="replaceDiv('/build/CygAddFileProf.html')" class="btn btn-success btn-circle btn-lg">
+							 	    	<i class="fa fa-plus"></i>
+                           	    	</button>
                             	</p>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">S No.</th>
-                                            <th class="text-center">Profile Name</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
+                            	
+
+                            	<table class="table table-striped" id=cygtable>
+                                </table> 
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -53,9 +46,6 @@
 	                                            <th class="text-center">Profile Name</th>
 	                                        </tr>
 	                                    </thead>
-	                                    <tbody>
-                                        
-	                                    </tbody>
 	                                </table>
 	                            </div>
                             <!-- /.table-responsive -->
@@ -65,4 +55,27 @@
            </div>   
        </div>		
 	</div>
+	<script>
+	$(function () {
+		
+		$('#cygtable').bootstrapTable({
+		    columns: [{
+		        field: 'id',
+		        title: 'S.NO'
+		    }, {
+		        field: 'profile',
+		        title: 'PROFILE NAME'
+		    }],
+		    data: {{profarr | safe}}
+		});
+		
+		/* var profdirlist = {{profdir | safe}};
+		console.log("HI")
+		console.log(profdirlist);
+	    $('#cygtable').bootstrapTable({
+	        data: profdirlist
+	    }); */
+	});
+	</script>
+	
 </html>

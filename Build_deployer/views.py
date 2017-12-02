@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import json
 
 # Create your views here.
 from django.views.generic import TemplateView
@@ -6,14 +7,34 @@ from django.http import HttpResponseRedirect
 from Build_deployer.bin.form.login_form import LoginForm
 
 from Build_deployer.bin.validation.login import login_validation_class
+from Build_deployer.bin.db.file_form_db import *
+
+
+
+
+
 # Create your views here.
 class HomePageView(TemplateView):
     def get(self, request, **kwargs):
         form = LoginForm(request.GET)
         render(request, 'login.jsp', {'form': form})
         
-class CygnetFileProfPageView(TemplateView):
-    template_name = "CygFileProf.html"
+def CygnetFileProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        cygprofadd=cyg_prof_db_query
+        proflist=cygprofadd.get_prof_list_query(cygprofadd)
+        profarr=[]
+        for idx, val in enumerate(proflist):
+            profdir={}
+            profdir["id"]=str(idx+1)
+            profdir["profile"]=val
+            profarr.append(profdir)
+            
+        #profdir = json.dumps(profdir)
+        print(profarr)
+
+        return render(request, 'CygFileProf.html', {'profarr' : profarr})
     
 class M6FileProfPageView(TemplateView):
     template_name = "M6FileProf.html"
@@ -21,8 +42,15 @@ class M6FileProfPageView(TemplateView):
 class M6EncrptyFileProfPageView(TemplateView):
     template_name = "M6EnctFileProf.html" 
     
-class CygnetAddFileProfPageView(TemplateView):
-    template_name = "CygAddFileProf.html"   
+def CygnetAddFileProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        cygprofadd=cyg_prof_db_query
+        proflist=cygprofadd.get_prof_list_query(cygprofadd)
+        proflist = json.dumps(proflist)
+        print(proflist)
+        return render(request, 'CygAddFileProf.html', {'proflist': proflist})
+       
   
 class M6AddFileProfPageView(TemplateView):
     template_name = "M6AddFileProf.html"  
@@ -35,6 +63,9 @@ class TemplatesView(TemplateView):
 
 class TestView(TemplateView):    
     template_name = "Dashboard.html"
+    
+class CompleteView(TemplateView):    
+    template_name = "Complete.html"
 
 def login_validation(request):
         # if this is a POST request we need to process the form data
@@ -55,7 +86,10 @@ def login_validation(request):
 def cyg_add_prof_validation(request):
     if request.method == 'POST':
         #get form value to save in db
-        cygaddvaldir=request.POST.get
+        cygaddvaldir=request.POST
         print(cygaddvaldir)
-        return render(request, 'Dashboard.html')
-    
+        dbconnection()
+        cygprofadd=cyg_prof_db_query
+        cygprofadd.insert_query(cygprofadd,cygaddvaldir)
+        return render(request, 'Complete.html',{'result': "Cygnet profile added",'location':'/build/CygFileProf.html'})
+        
