@@ -38,16 +38,20 @@
         	                     Cygnet File profile 
             	            </div>
                 	        <div class="panel-body">
-								 <div class="table-responsive">
-                        	        <table class="table table-striped">
-	                                    <thead>
-	                                        <tr>
-	                                            <th class="text-center">S No.</th>
-	                                            <th class="text-center">Profile Name</th>
-	                                        </tr>
-	                                    </thead>
-	                                </table>
-	                            </div>
+								<div class="col-lg-12">
+									<form id="cygdelform" method="post" class="form-horizontal" action="/build/CygFileDelVal">
+										{% csrf_token %}
+										<div class="form-group">
+											<select class="js-del-prof" id="cygdellist" name="cygdellist" multiple="multiple" style="width: 50%">
+											</select>
+										</div>
+										<div class="form-group" align="center">
+											<div class="col-sm-6">
+													<button class="btn btn-danger"><b>Delete</b></button>
+											</div>										  		
+										</div>
+									</form>
+								</div>
                             <!-- /.table-responsive -->
 	                        </div>
 	               </div>
@@ -57,18 +61,34 @@
 	</div>
 	<script>
 	$(function () {
-		
+		var proflist = {{profarr | safe}};
+		var flag=true;
+
+		if(jQuery.isEmptyObject(proflist)){
+			proflist=[{'id':'','text':'There is no profile'}]
+			flag=false;
+		}
 		$('#cygtable').bootstrapTable({
 		    columns: [{
 		        field: 'id',
 		        title: 'S.NO'
 		    }, {
-		        field: 'profile',
+		        field: 'text',
 		        title: 'PROFILE NAME'
 		    }],
-		    data: {{profarr | safe}}
+		    data: proflist
 		});
-		
+
+		//delete profile select list
+		if(!flag){
+			proflist=[]
+		}
+
+		$('#cygdellist').select2({
+			placeholder: "Select profiles for deletion",
+			data: proflist
+		});
+		//var profdellist = {{profdel | safe}};
 		/* var profdirlist = {{profdir | safe}};
 		console.log("HI")
 		console.log(profdirlist);
@@ -76,6 +96,22 @@
 	        data: profdirlist
 	    }); */
 	});
+	$(document).ready(function() {
+		$("#cygdelform").validate({
+			ignore: [],
+			rules: {
+				cygdellist: {
+					required: true
+				}
+			},
+			messages: {
+				cygdellist: {
+					required: "Please select any one profle to delete"
+				}
+			}
+		});
+	});
+		
 	</script>
 	
 </html>

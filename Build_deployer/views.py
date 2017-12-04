@@ -28,7 +28,7 @@ def CygnetFileProfPageView(request):
         for idx, val in enumerate(proflist):
             profdir={}
             profdir["id"]=str(idx+1)
-            profdir["profile"]=val
+            profdir["text"]=val
             profarr.append(profdir)
             
         #profdir = json.dumps(profdir)
@@ -49,7 +49,7 @@ def CygnetAddFileProfPageView(request):
         proflist=cygprofadd.get_prof_list_query(cygprofadd)
         proflist = json.dumps(proflist)
         print(proflist)
-        return render(request, 'CygAddFileProf.html', {'proflist': proflist})
+        return render(request, 'CygAddFileProf.html', {'proflist': proflist}, )
        
   
 class M6AddFileProfPageView(TemplateView):
@@ -92,4 +92,36 @@ def cyg_add_prof_validation(request):
         cygprofadd=cyg_prof_db_query
         cygprofadd.insert_query(cygprofadd,cygaddvaldir)
         return render(request, 'Complete.html',{'result': "Cygnet profile added",'location':'/build/CygFileProf.html'})
+        
+def cyg_del_prof_validation(request):
+    if request.method == 'POST':
+        cygdelvaldir=request.POST
+        print(cygdelvaldir)
+        dbconnection()
+        cygprofadd=cyg_prof_db_query
+        proflist=cygprofadd.get_prof_list_query(cygprofadd)
+        profarr=[]
+        for idx, val in enumerate(proflist):
+            profdir={}
+            profdir["id"]=str(idx+1)
+            profdir["text"]=val
+            profarr.append(profdir)
+        profarr        
+        return render(request, 'Complete.html',{'result': "Cygnet profile added",'location':'/build/CygFileProf.html'})
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         

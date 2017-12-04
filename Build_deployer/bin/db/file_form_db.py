@@ -17,4 +17,4 @@ class cyg_prof_db_query():
 			ret_list_prof.append(profi.cygprfname)
 		return ret_list_prof
 		
-		
+	#def delete_query(self,proname):	

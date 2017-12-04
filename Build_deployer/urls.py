@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView.as_view()),
     url(r'^CygAddFileProf.html$', views.CygnetAddFileProfPageView),
     url(r'^CygAddFileVal$',views.cyg_add_prof_validation),
+    url(r'^CygFileDelVal$',views.cyg_del_prof_validation),
     url(r'^M6AddFileProf.html$', views.M6AddFileProfPageView.as_view()),
     url(r'^M6EnctAddFileProf.html$', views.M6EnctAddFileProfPageView.as_view()),
     url(r'^Complete.html$', views.CompleteView.as_view()),
