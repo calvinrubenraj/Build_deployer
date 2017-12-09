@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-	<div>
-       <div class="panel-body">
-           <!-- Nav tabs -->
-           <ul class="nav nav-tabs">
-               <li class="active"><a href="#add_edit" data-toggle="tab">Add/Edit Profile</a>
-               </li>
-               <li><a href="#delete" data-toggle="tab">Delete Profile</a>
-           </ul>
+<div>
+	<div class="panel-body">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#add_edit" data-toggle="tab">Add/Edit
+					Profile</a></li>
+			<li><a href="#delete" data-toggle="tab">Delete Profile</a>
+		</ul>
 
-           <!-- Tab panes -->
-           <div class="tab-content">
-               <div class="tab-pane fade in active" id="add_edit">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                             Cygnet File profile 
-                        </div>
-                        <div class="panel-body">
-							 <div class="table-responsive">
-							 	<p class="text-right">
-							 		<button type="button" onclick="replaceDiv('/build/CygAddFileProf.html')" class="btn btn-success btn-circle btn-lg">
-							 	    	<i class="fa fa-plus"></i>
-                           	    	</button>
-                            	</p>
-                            	
-
-                            	<table class="table table-striped" id=cygtable>
-                                </table> 
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                    </div>
-               </div>    
-               <div class="tab-pane fade" id="delete">
-				   <div class="panel panel-default">
-    	                    <div class="panel-heading">
-        	                     Cygnet File profile 
-            	            </div>
-                	        <div class="panel-body">
-								<div class="col-lg-12">
-									<form id="cygdelform" method="post" class="form-horizontal" action="/build/CygFileDelVal">
-										{% csrf_token %}
-										<div class="form-group">
-											<select class="js-del-prof" id="cygdellist" name="cygdellist" multiple="multiple" style="width: 50%">
-											</select>
-										</div>
-										<div class="form-group" align="center">
-											<div class="col-sm-6">
-													<button class="btn btn-danger"><b>Delete</b></button>
-											</div>										  		
-										</div>
-									</form>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="add_edit">
+				<div class="panel panel-default">
+					<div class="panel-heading">Cygnet File profile</div>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<p class="text-right">
+								<button type="button"
+									onclick="replaceDiv('/build/CygAddFileProf.html')"
+									class="btn btn-success btn-circle btn-lg">
+									<i class="fa fa-plus"></i>
+								</button>
+							</p>
+							<table class="table table-striped" id=cygtable>
+							</table>
+						</div>
+						<!-- /.table-responsive -->
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="delete">
+				<div class="panel panel-default">
+					<div class="panel-heading">Cygnet File profile</div>
+					<div class="panel-body">
+						<div class="col-lg-12">
+							<form id="cygdelform" method="post"
+								onsubmit="return confirm('Do you really want to delete these profiles?');"
+								class="form-horizontal" action="/build/CygFileDelVal">
+								{% csrf_token %}
+								<div class="form-group">
+									<select class="js-del-prof" id="cygdellist" name="cygdellist"
+										multiple="multiple" style="width: 50%">
+									</select>
 								</div>
-                            <!-- /.table-responsive -->
-	                        </div>
-	               </div>
-           	   </div>
-           </div>   
-       </div>		
+								<div class="form-group" align="center">
+									<div class="col-sm-6">
+										<button class="btn btn-danger">
+											<b>Delete</b>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- /.table-responsive -->
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<script>
+</div>
+<script>
 	$(function () {
 		var proflist = {{profarr | safe}};
 		var flag=true;
@@ -106,12 +107,29 @@
 			},
 			messages: {
 				cygdellist: {
-					required: "Please select any one profle to delete"
+					required: "Please select any one of the profile to delete"
 				}
+			},
+			errorElement: "em",
+			errorPlacement: function ( error, element ) {
+				// Add the `help-block` class to the error element
+				error.addClass( "help-block" );
+
+				if ( element.prop( "type" ) === "checkbox" ) {
+					error.insertAfter( element.parent( "label" ) );
+				} else {
+					error.insertAfter( element );
+				}
+			},
+			highlight: function ( element, errorClass, validClass ) {
+				$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+			},
+			unhighlight: function (element, errorClass, validClass) {
+				$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
 			}
 		});
 	});
 		
-	</script>
-	
+</script>
+
 </html>

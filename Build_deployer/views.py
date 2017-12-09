@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import json
+from django.http import QueryDict
 
 # Create your views here.
 from django.views.generic import TemplateView
@@ -8,7 +9,7 @@ from Build_deployer.bin.form.login_form import LoginForm
 
 from Build_deployer.bin.validation.login import login_validation_class
 from Build_deployer.bin.db.file_form_db import *
-
+from Build_deployer.bin.data.plugindata import *
 
 
 
@@ -21,15 +22,18 @@ class HomePageView(TemplateView):
         
 def CygnetFileProfPageView(request):
     if request.method == 'GET':
+        #Get the profile list from db
         dbconnection()
         cygprofadd=cyg_prof_db_query
         proflist=cygprofadd.get_prof_list_query(cygprofadd)
-        profarr=[]
-        for idx, val in enumerate(proflist):
-            profdir={}
-            profdir["id"]=str(idx+1)
-            profdir["text"]=val
-            profarr.append(profdir)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+#         for idx, val in enumerate(proflist):
+#             profdir={}
+#             profdir["id"]=str(idx+1)
+#             profdir["text"]=val
+#             profarr.append(profdir)
             
         #profdir = json.dumps(profdir)
         print(profarr)
@@ -96,17 +100,19 @@ def cyg_add_prof_validation(request):
 def cyg_del_prof_validation(request):
     if request.method == 'POST':
         cygdelvaldir=request.POST
-        print(cygdelvaldir)
+        idList = cygdelvaldir.getlist('cygdellist')
+        #Get the profile list from db
         dbconnection()
-        cygprofadd=cyg_prof_db_query
-        proflist=cygprofadd.get_prof_list_query(cygprofadd)
-        profarr=[]
-        for idx, val in enumerate(proflist):
-            profdir={}
-            profdir["id"]=str(idx+1)
-            profdir["text"]=val
-            profarr.append(profdir)
-        profarr        
+        cygprofqueryobj=cyg_prof_db_query
+        proflist=cygprofqueryobj.get_prof_list_query(cygprofqueryobj)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        #print(myDict['cygdellist'])
+        profnamearr=pluginlist.convert_id_text_list(pluginlistobj,proflist,idList)
+        print(profnamearr)
+        #delete the profile in profnamearr
+        cygprofqueryobj.del_prof_query(cygprofqueryobj,profnamearr)
+        print("profile deleted")
         return render(request, 'Complete.html',{'result': "Cygnet profile added",'location':'/build/CygFileProf.html'})
         
         

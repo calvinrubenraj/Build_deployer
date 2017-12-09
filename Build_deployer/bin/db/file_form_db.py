@@ -16,5 +16,10 @@ class cyg_prof_db_query():
 		for profi in cygnet_prof_coll.objects:
 			ret_list_prof.append(profi.cygprfname)
 		return ret_list_prof
+	
+	def del_prof_query(self,prof_list):
+		for prof in prof_list:
+			profobj = cygnet_prof_coll.objects(cygprfname=prof)
+			profobj.delete()
 		
 	#def delete_query(self,proname):	
