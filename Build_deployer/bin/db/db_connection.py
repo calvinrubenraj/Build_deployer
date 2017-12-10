@@ -13,4 +13,13 @@ class cygnet_prof_coll(Document):
     cygusername = StringField(max_length=255, required=True)
     cygpassword = StringField(max_length=255, required=True)
     
+class m6_prof_coll(Document):
+    m6prfname = StringField(max_length=255, required=True, primary_key=True)
+    m6ip = StringField(max_length=255)
+    m6port = StringField(max_length=255)
+    m6sid = StringField(max_length=255)
+    m6url = StringField(max_length=1024)
+    m6username = StringField(max_length=255, required=True)
+    m6password = StringField(max_length=255, required=True)
+    
 

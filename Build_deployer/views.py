@@ -24,8 +24,8 @@ def CygnetFileProfPageView(request):
     if request.method == 'GET':
         #Get the profile list from db
         dbconnection()
-        cygprofadd=cyg_prof_db_query
-        proflist=cygprofadd.get_prof_list_query(cygprofadd)
+        cygproflist=cyg_prof_db_query
+        proflist=cygproflist.get_prof_list_query(cygproflist)
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
@@ -40,8 +40,26 @@ def CygnetFileProfPageView(request):
 
         return render(request, 'CygFileProf.html', {'profarr' : profarr})
     
-class M6FileProfPageView(TemplateView):
-    template_name = "M6FileProf.html"
+def M6FileProfPageView(request):
+    if request.method == 'GET':
+        #Get the profile list from db
+        dbconnection()
+        m6proflist=m6_prof_db_query
+        proflist=m6proflist.get_prof_list_query(m6proflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+#         for idx, val in enumerate(proflist):
+#             profdir={}
+#             profdir["id"]=str(idx+1)
+#             profdir["text"]=val
+#             profarr.append(profdir)
+            
+        #profdir = json.dumps(profdir)
+        print(profarr)
+
+        return render(request, 'M6FileProf.html', {'profarr' : profarr})
+
     
 class M6EncrptyFileProfPageView(TemplateView):
     template_name = "M6EnctFileProf.html" 
@@ -49,15 +67,21 @@ class M6EncrptyFileProfPageView(TemplateView):
 def CygnetAddFileProfPageView(request):
     if request.method == 'GET':
         dbconnection()
-        cygprofadd=cyg_prof_db_query
-        proflist=cygprofadd.get_prof_list_query(cygprofadd)
+        cygproflist=cyg_prof_db_query
+        proflist=cygproflist.get_prof_list_query(cygproflist)
         proflist = json.dumps(proflist)
         print(proflist)
         return render(request, 'CygAddFileProf.html', {'proflist': proflist}, )
        
   
-class M6AddFileProfPageView(TemplateView):
-    template_name = "M6AddFileProf.html"  
+def M6AddFileProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        m6proflist=m6_prof_db_query
+        proflist=m6proflist.get_prof_list_query(m6proflist)
+        proflist = json.dumps(proflist)
+        print(proflist)
+        return render(request, 'M6AddFileProf.html', {'proflist': proflist}, ) 
     
 class M6EnctAddFileProfPageView(TemplateView):
     template_name = "M6EnctAddFileProf.html"    
@@ -113,9 +137,35 @@ def cyg_del_prof_validation(request):
         #delete the profile in profnamearr
         cygprofqueryobj.del_prof_query(cygprofqueryobj,profnamearr)
         print("profile deleted")
-        return render(request, 'Complete.html',{'result': "Cygnet profile added",'location':'/build/CygFileProf.html'})
+        return render(request, 'Complete.html',{'result': "Cygnet profile deleted",'location':'/build/CygFileProf.html'})
         
+def m6_add_prof_validation(request):
+    if request.method == 'POST':
+        #get form value to save in db
+        m6addvaldir=request.POST
+        print(m6addvaldir)
+        dbconnection()
+        m6profadd=m6_prof_db_query
+        m6profadd.insert_query(m6profadd,m6addvaldir)
+        return render(request, 'Complete.html',{'result': "M6 profile added",'location':'/build/M6FileProf.html'})
         
+def m6_del_prof_validation(request):
+    if request.method == 'POST':
+        m6delvaldir=request.POST
+        idList = m6delvaldir.getlist('m6dellist')
+        #Get the profile list from db
+        dbconnection()
+        m6profqueryobj=m6_prof_db_query
+        proflist=m6profqueryobj.get_prof_list_query(m6profqueryobj)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        #print(myDict['cygdellist'])
+        profnamearr=pluginlist.convert_id_text_list(pluginlistobj,proflist,idList)
+        print(profnamearr)
+        #delete the profile in profnamearr
+        m6profqueryobj.del_prof_query(m6profqueryobj,profnamearr)
+        print("profile deleted")
+        return render(request, 'Complete.html',{'result': "M6 profile deleted",'location':'/build/M6FileProf.html'})
         
         
         
