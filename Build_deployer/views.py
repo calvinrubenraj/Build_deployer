@@ -166,7 +166,12 @@ def m6_del_prof_validation(request):
         m6profqueryobj.del_prof_query(m6profqueryobj,profnamearr)
         print("profile deleted")
         return render(request, 'Complete.html',{'result': "M6 profile deleted",'location':'/build/M6FileProf.html'})
-        
+    
+def m6enct_add_prof_validation(request):
+    if request.method == 'POST':
+        m6enctaddvaldir=request.POST
+        print(m6enctaddvaldir)
+        return render(request, 'Complete.html',{'result': "M6 Encrypt file profile added",'location':'/build/M6EnctFileProf.html'})
         
         
         

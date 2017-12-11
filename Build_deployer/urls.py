@@ -26,6 +26,7 @@ urlpatterns = [
     #M6 Encryption html and action
     url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView.as_view()),
     url(r'^M6EnctAddFileProf.html$', views.M6EnctAddFileProfPageView.as_view()),
+    url(r'^M6EnctAddFileVal$',views.m6enct_add_prof_validation),
     url(r'^Complete.html$', views.CompleteView.as_view()),
     #url(r'^about/$', views.AboutPageView.as_view()),
 #    url(r'^login_failed/$', views.login_validation),
