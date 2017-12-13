@@ -22,4 +22,8 @@ class m6_prof_coll(Document):
     m6username = StringField(max_length=255, required=True)
     m6password = StringField(max_length=255, required=True)
     
+class m6enct_prof_coll(Document):
+    m6enctprfname = StringField(max_length=255, required=True, primary_key=True)
+    m6enctfilecont = StringField(max_length=5120, required=True)
+    
 

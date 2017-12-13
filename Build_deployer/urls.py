@@ -11,6 +11,7 @@ from Build_deployer import views
 urlpatterns = [
     url(r'^$', views.login_validation),
     url(r'^login.jsp$', views.login_validation),
+    url(r'^Complete.html$', views.CompleteView.as_view()),
     url(r'^temp$', views.TemplatesView.as_view()),
     url(r'^test$', views.TestView.as_view()),
     #Cygnet profile html and action
@@ -24,10 +25,13 @@ urlpatterns = [
     url(r'^M6AddFileVal$', views.m6_add_prof_validation),
     url(r'^M6FileDelVal$', views.m6_del_prof_validation),
     #M6 Encryption html and action
-    url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView.as_view()),
-    url(r'^M6EnctAddFileProf.html$', views.M6EnctAddFileProfPageView.as_view()),
+    url(r'^M6EnctFileProf.html$', views.M6EncrptyFileProfPageView),
+    url(r'^M6EnctAddFileProf.html$', views.M6EnctAddFileProfPageView),
     url(r'^M6EnctAddFileVal$',views.m6enct_add_prof_validation),
-    url(r'^Complete.html$', views.CompleteView.as_view()),
+    url(r'^M6EnctFileDelVal$', views.m6enct_del_prof_validation),
+    #ssh html and action
+    url(r'^SshProf.html$', views.SshProfPageView),
+    url(r'^SshAddProf.html$',views.SshAddProfPageView),
     #url(r'^about/$', views.AboutPageView.as_view()),
 #    url(r'^login_failed/$', views.login_validation),
  #   url(r'^get_login/$', views.get_name, name='get_name'),

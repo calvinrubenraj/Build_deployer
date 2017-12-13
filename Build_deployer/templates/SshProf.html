@@ -13,17 +13,17 @@
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="add_edit">
 				<div class="panel panel-default">
-					<div class="panel-heading">M6 Encrypt File profile</div>
+					<div class="panel-heading">Ssh profile</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<p class="text-right">
 								<button type="button"
-									onclick="replaceDiv('/build/M6EnctAddFileProf.html')"
+									onclick="replaceDiv('/build/SshAddProf.html')"
 									class="btn btn-success btn-circle btn-lg">
 									<i class="fa fa-plus"></i>
 								</button>
 							</p>
-							<table class="table table-striped" id="m6encttable">
+							<table class="table table-striped" id="sshtable">
 							</table>
 						</div>
 						<!-- /.table-responsive -->
@@ -32,15 +32,15 @@
 			</div>
 			<div class="tab-pane fade" id="delete">
 				<div class="panel panel-default">
-					<div class="panel-heading">M6 Encrypt File profile</div>
+					<div class="panel-heading">Ssh profile</div>
 					<div class="panel-body">
 						<div class="col-lg-12">
-							<form id="m6enctdelform" method="post"
+							<form id="sshdelform" method="post"
 								onsubmit="return confirm('Do you really want to delete these profiles?');"
-								class="form-horizontal" action="/build/M6EnctFileDelVal">
+								class="form-horizontal" action="/build/SshDelVal">
 								{% csrf_token %}
 								<div class="form-group">
-									<select class="js-del-prof" id="m6enctdellist" name="m6enctdellist"
+									<select class="js-del-prof" id="sshdellist" name="sshdellist"
 										multiple="multiple" style="width: 50%">
 									</select>
 								</div>
@@ -69,7 +69,7 @@
 			proflist=[{'id':'','text':'There is no profile'}]
 			flag=false;
 		}
-		$('#m6encttable').bootstrapTable({
+		$('#sshtable').bootstrapTable({
 		    columns: [{
 		        field: 'id',
 		        title: 'S.NO'
@@ -85,7 +85,7 @@
 			proflist=[]
 		}
 
-		$('#m6enctdellist').select2({
+		$('#sshdellist').select2({
 			placeholder: "Select profiles for deletion",
 			data: proflist
 		});
@@ -98,15 +98,15 @@
 	    }); */
 	});
 	$(document).ready(function() {
-		$("#m6enctdelform").validate({
+		$("#sshdelform").validate({
 			ignore: [],
 			rules: {
-				cygdellist: {
+				sshdellist: {
 					required: true
 				}
 			},
 			messages: {
-				cygdellist: {
+				sshdellist: {
 					required: "Please select any one of the profile to delete"
 				}
 			},
@@ -131,4 +131,5 @@
 	});
 		
 </script>
+
 </html>

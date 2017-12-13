@@ -20,6 +20,22 @@ class HomePageView(TemplateView):
         form = LoginForm(request.GET)
         render(request, 'login.jsp', {'form': form})
         
+def login_validation(request):
+        # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = LoginForm(request.POST)
+        print(form)
+        login_valid_object=login_validation_class
+        valid = login_valid_object.login_check(login_valid_object, form)
+        if(valid):
+            return render(request, 'Dashboard.html')
+        return render(request, 'login.jsp', {'login_form': form, 'login_fail':''})
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = LoginForm()
+        return render(request, 'login.jsp', {'login_form': form,'login_fail':'hidden'})
+        
 def CygnetFileProfPageView(request):
     if request.method == 'GET':
         #Get the profile list from db
@@ -40,30 +56,6 @@ def CygnetFileProfPageView(request):
 
         return render(request, 'CygFileProf.html', {'profarr' : profarr})
     
-def M6FileProfPageView(request):
-    if request.method == 'GET':
-        #Get the profile list from db
-        dbconnection()
-        m6proflist=m6_prof_db_query
-        proflist=m6proflist.get_prof_list_query(m6proflist)
-        #Change the format according to 
-        pluginlistobj=pluginlist
-        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
-#         for idx, val in enumerate(proflist):
-#             profdir={}
-#             profdir["id"]=str(idx+1)
-#             profdir["text"]=val
-#             profarr.append(profdir)
-            
-        #profdir = json.dumps(profdir)
-        print(profarr)
-
-        return render(request, 'M6FileProf.html', {'profarr' : profarr})
-
-    
-class M6EncrptyFileProfPageView(TemplateView):
-    template_name = "M6EnctFileProf.html" 
-    
 def CygnetAddFileProfPageView(request):
     if request.method == 'GET':
         dbconnection()
@@ -72,44 +64,6 @@ def CygnetAddFileProfPageView(request):
         proflist = json.dumps(proflist)
         print(proflist)
         return render(request, 'CygAddFileProf.html', {'proflist': proflist}, )
-       
-  
-def M6AddFileProfPageView(request):
-    if request.method == 'GET':
-        dbconnection()
-        m6proflist=m6_prof_db_query
-        proflist=m6proflist.get_prof_list_query(m6proflist)
-        proflist = json.dumps(proflist)
-        print(proflist)
-        return render(request, 'M6AddFileProf.html', {'proflist': proflist}, ) 
-    
-class M6EnctAddFileProfPageView(TemplateView):
-    template_name = "M6EnctAddFileProf.html"    
-    
-class TemplatesView(TemplateView):
-    template_name = "LeftNav.html"
-
-class TestView(TemplateView):    
-    template_name = "Dashboard.html"
-    
-class CompleteView(TemplateView):    
-    template_name = "Complete.html"
-
-def login_validation(request):
-        # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = LoginForm(request.POST)
-        print(form)
-        login_valid_object=login_validation_class
-        valid = login_valid_object.login_check(login_valid_object, form)
-        if(valid):
-            return render(request, 'Dashboard.html')
-        return render(request, 'login.jsp', {'login_form': form, 'login_fail':''})
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = LoginForm()
-        return render(request, 'login.jsp', {'login_form': form,'login_fail':'hidden'})
     
 def cyg_add_prof_validation(request):
     if request.method == 'POST':
@@ -138,7 +92,36 @@ def cyg_del_prof_validation(request):
         cygprofqueryobj.del_prof_query(cygprofqueryobj,profnamearr)
         print("profile deleted")
         return render(request, 'Complete.html',{'result': "Cygnet profile deleted",'location':'/build/CygFileProf.html'})
-        
+    
+def M6FileProfPageView(request):
+    if request.method == 'GET':
+        #Get the profile list from db
+        dbconnection()
+        m6proflist=m6_prof_db_query
+        proflist=m6proflist.get_prof_list_query(m6proflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+#         for idx, val in enumerate(proflist):
+#             profdir={}
+#             profdir["id"]=str(idx+1)
+#             profdir["text"]=val
+#             profarr.append(profdir)
+            
+        #profdir = json.dumps(profdir)
+        print(profarr)
+
+        return render(request, 'M6FileProf.html', {'profarr' : profarr})
+
+def M6AddFileProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        m6proflist=m6_prof_db_query
+        proflist=m6proflist.get_prof_list_query(m6proflist)
+        proflist = json.dumps(proflist)
+        print(proflist)
+        return render(request, 'M6AddFileProf.html', {'proflist': proflist}, )
+    
 def m6_add_prof_validation(request):
     if request.method == 'POST':
         #get form value to save in db
@@ -165,13 +148,108 @@ def m6_del_prof_validation(request):
         #delete the profile in profnamearr
         m6profqueryobj.del_prof_query(m6profqueryobj,profnamearr)
         print("profile deleted")
-        return render(request, 'Complete.html',{'result': "M6 profile deleted",'location':'/build/M6FileProf.html'})
+        return render(request, 'Complete.html',{'result': "M6 profile deleted",'location':'/build/M6FileProf.html'})    
+
+    
+def M6EncrptyFileProfPageView(request):
+    if request.method == 'GET':
+        #Get the profile list from db
+        dbconnection()
+        m6enctproflist=m6enct_prof_db_query
+        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+#         for idx, val in enumerate(proflist):
+#             profdir={}
+#             profdir["id"]=str(idx+1)
+#             profdir["text"]=val
+#             profarr.append(profdir)
+            
+        #profdir = json.dumps(profdir)
+        print(profarr)
+
+        return render(request, 'M6EnctFileProf.html', {'profarr' : profarr})
+   
+def M6EnctAddFileProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        m6enctproflist=m6enct_prof_db_query
+        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        proflist = json.dumps(proflist)
+        print(proflist)
+        return render(request, 'M6EnctAddFileProf.html', {'proflist': proflist}, )
     
 def m6enct_add_prof_validation(request):
     if request.method == 'POST':
         m6enctaddvaldir=request.POST
         print(m6enctaddvaldir)
+        dbconnection()
+        m6enctprofadd=m6enct_prof_db_query
+        m6enctprofadd.insert_query(m6enctprofadd,m6enctaddvaldir)
         return render(request, 'Complete.html',{'result': "M6 Encrypt file profile added",'location':'/build/M6EnctFileProf.html'})
+
+def m6enct_del_prof_validation(request):
+    if request.method == 'POST':
+        m6delvaldir=request.POST
+        idList = m6delvaldir.getlist('m6enctdellist')
+        #Get the profile list from db
+        dbconnection()
+        m6enctprofqueryobj=m6enct_prof_db_query
+        proflist=m6enctprofqueryobj.get_prof_list_query(m6enctprofqueryobj)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        #print(myDict['cygdellist'])
+        profnamearr=pluginlist.convert_id_text_list(pluginlistobj,proflist,idList)
+        print(profnamearr)
+        #delete the profile in profnamearr
+        m6enctprofqueryobj.del_prof_query(m6enctprofqueryobj,profnamearr)
+        print("profile deleted")
+        return render(request, 'Complete.html',{'result': "M6 Encrypt file profile deleted",'location':'/build/M6EnctFileProf.html'})
+
+def SshProfPageView(request):
+    if request.method == 'GET':
+        #Get the profile list from db
+        dbconnection()
+        m6enctproflist=m6enct_prof_db_query
+        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+#         for idx, val in enumerate(proflist):
+#             profdir={}
+#             profdir["id"]=str(idx+1)
+#             profdir["text"]=val
+#             profarr.append(profdir)
+            
+        #profdir = json.dumps(profdir)
+        print(profarr)
+
+        return render(request, 'SshProf.html', {'profarr' : profarr})
+
+def SshAddProfPageView(request):
+    if request.method == 'GET':
+        dbconnection()
+        m6enctproflist=m6enct_prof_db_query
+        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        proflist = json.dumps(proflist)
+        print(proflist)
+        return render(request, 'SshAddProf.html', {'proflist': proflist}, )
+    
+class TemplatesView(TemplateView):
+    template_name = "LeftNav.html"
+
+class TestView(TemplateView):    
+    template_name = "Dashboard.html"
+    
+class CompleteView(TemplateView):    
+    template_name = "Complete.html"
+
+
+   
+        
+
+    
         
         
         
