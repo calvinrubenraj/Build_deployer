@@ -32,6 +32,8 @@ urlpatterns = [
     #ssh html and action
     url(r'^SshProf.html$', views.SshProfPageView),
     url(r'^SshAddProf.html$',views.SshAddProfPageView),
+    url(r'^SshAddVal$',views.ssh_add_prof_validation),
+    url(r'^SshDelVal$',views.ssh_del_prof_validation),
     #url(r'^about/$', views.AboutPageView.as_view()),
 #    url(r'^login_failed/$', views.login_validation),
  #   url(r'^get_login/$', views.get_name, name='get_name'),

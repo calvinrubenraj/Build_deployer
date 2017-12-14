@@ -59,4 +59,26 @@ class m6enct_prof_db_query():
 	def del_prof_query(self,prof_list):
 		for prof in prof_list:
 			profobj = m6enct_prof_coll.objects(m6enctprfname=prof)
-			profobj.delete()	
+			profobj.delete()
+			
+class ssh_prof_db_query():
+	
+	def insert_query(self,insert_dict):
+		if(insert_dict.__contains__('sshlocation')):
+			insertquery = ssh_prof_coll(sshprfname=insert_dict['sshprfname'], sshusername=insert_dict['sshusername'], sshpassword=insert_dict['sshpassword'], sship=insert_dict['sship'], sshlocation=insert_dict['sshlocation'])
+		else:
+			insertquery = ssh_prof_coll(sshprfname=insert_dict['sshprfname'], sshusername=insert_dict['sshusername'], sshpassword=insert_dict['sshpassword'], sship=insert_dict['sship'])
+		insertquery.save()
+	
+	def get_prof_list_query(self):
+		ret_list_prof=[]
+		for profi in ssh_prof_coll.objects:
+			ret_list_prof.append(profi.sshprfname)
+		return ret_list_prof
+	
+	def del_prof_query(self,prof_list):
+		for prof in prof_list:
+			profobj = ssh_prof_coll.objects(sshprfname=prof)
+			profobj.delete()
+		
+	

@@ -26,4 +26,11 @@ class m6enct_prof_coll(Document):
     m6enctprfname = StringField(max_length=255, required=True, primary_key=True)
     m6enctfilecont = StringField(max_length=5120, required=True)
     
+class ssh_prof_coll(Document):
+    sshprfname = StringField(max_length=255, required=True, primary_key=True)
+    sshusername = StringField(max_length=255, required=True)
+    sshpassword = StringField(max_length=255, required=True)
+    sship = StringField(max_length=255)
+    sshlocation = StringField(max_length=1024)
+    
 

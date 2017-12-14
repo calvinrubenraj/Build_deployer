@@ -14,53 +14,43 @@
 <div class="panel panel-default">
 	<div class="panel-heading" align="center">
 <!-- 		<div class="col-lg-6" align="center"> -->
-			Add Cygnet File profile
+			Add SSH profile
 <!-- 		</div> -->
 	</div>
 	<div class="panel-body">
 		<div class="col-lg-6">
-			<form id="cygdbprofform" method="post" class="form-horizontal" action="/build/CygAddFileVal">
+			<form id="sshdbprofform" method="post" class="form-horizontal" action="/build/SshAddVal">
 				{% csrf_token %}
 				<div class="form-group">
 					<div class="col-lg-11">	
-						<input id="cygprfname" name="cygprfname" class="form-control" placeholder="Profile Name"/>
+						<input id="sshprfname" name="sshprfname" class="form-control" placeholder="Profile Name"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input id="cygurl" class="form-control" name="cygurl" placeholder="Url" disabled="" />
+						<input class="form-control" placeholder="SSH User Name" name="sshusername" id="sshusername" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-11">
+						<input type="text" class="form-control" placeholder="SSH Password" name="sshpassword" id="sshpassword" />
+					</div>
+				</div>
+			    <div class="form-group">       
+		            <div class="col-lg-11">
+						<input type="text" class="form-control" placeholder="SSH IP" name="sship" id="sship" required valid-name />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="checkbox">
 		            	<label>
-		            		<input id="cygurlcheck" value="" type="checkbox" onclick="checkurl('cygurlcheck');">Enable URL Field
+		            		<input id="loccheck" value="" type="checkbox" onclick="checkloc('loccheck');">Enable server location
 		                </label>
 		            </div>
 	            </div>
-			    <div class="form-group">       
-		            <div class="col-lg-11">
-						<input type="text" class="form-control" placeholder="IP" name="cygip" id="cygip" required valid-name />
-					</div>
-				</div>
 				<div class="form-group">
 					<div class="col-lg-11">
-						<input class="form-control" placeholder="Port" name="cygport" id="cygport" />
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-11">
-						<input class="form-control" placeholder="SID" name="cygsid" id="cygsid" />
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-11">
-						<input class="form-control" placeholder="Cygnet DB User Name" name="cygusername" id="cygusername" />
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-11">
-						<input type="text" class="form-control" placeholder="Cygnet DB Password" name="cygpassword" id="cygpassword" />
+						<input class="form-control" placeholder="SSH Location" name="sshlocation" id="sshlocation"  disabled/>
 					</div>
 				</div>
 				<div class="form-group" align="center">
@@ -78,25 +68,17 @@
 <script src="/static/js/bootstrap-toggle.min.js"></script>
 
 <script>
-function checkurl(checkid) {
-    var urlcheck = document.getElementById(checkid).checked;
-    var disarr = ["cygip","cygport","cygsid"];
-    var arrlen = disarr.length;
-    var urlid = "cygurl"
+function checkloc(checkid) {
+    var loccheck = document.getElementById(checkid).checked;
+    //var disarr = ["cygip","cygport","cygsid"];
+    //var arrlen = disarr.length;
+    var locid = "sshlocation"
 
-    if (urlcheck == false) {
-    	document.getElementById(urlid).disabled='disabled';
-    	document.getElementById(urlid).value='';
-    	for(i=0; i<arrlen; i++){
-    		document.getElementById(disarr[i]).disabled='';
-    	}
+    if (loccheck == true) {
+    	document.getElementById(locid).disabled='';
     }
-    else{
-    	document.getElementById(urlid).disabled='';
-    	for(i=0; i<arrlen; i++){
-    		document.getElementById(disarr[i]).disabled='disabled';
-    		document.getElementById(disarr[i]).value='';
-    	}
+    else {
+    	document.getElementById(locid).disabled='disabled';
     }
 }
 
@@ -116,105 +98,56 @@ $(document).ready(function(){
 	console.log(tester);
 	test = JSON.parse(tester);
 	console.log(test[0]); */
-	
+	jQuery.validator.addMethod("IP4Checker", function(value, element) {
+	    return this.optional(element) || /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/.test(value);
+	}, "");
          
-         jQuery.validator.addMethod("IP4Checker", function(value, element) {
-        	    return this.optional(element) || /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/.test(value);
-        	}, "");
-     	 
-         jQuery.validator.addMethod("Profnamevalid", function(value, element) {
-	        	 /* for (var i=0; i<proflisting.length; i++) {
-;
-        		    if (value === proflisting[i]) {
-        		        return false
-        		    }
-        		}
-        	 return true */
-        	 //return !(proflisting.indexOf(value) === -1);
-        	 //console.log($.inArray(value, proflisting))
-        	 return ($.inArray(value, proflisting) === -1);
-     		}, "");
+    jQuery.validator.addMethod("Profnamevalid", function(value, element) {
+		return ($.inArray(value, proflisting) === -1);
+	}, "");
 	 
 	//validation	
-	$("#cygdbprofform").validate({
-		
+	$("#sshdbprofform").validate({
 		rules: {
-			cygprfname: {
+			sshprfname: {
 				required: true,
 				Profnamevalid:true,
 				minlength: 4
 			},
-			cygurl: {
-				required: true
-				//minlength: 2
-			},
-  			cygip: {
-	  				required: true,
-	  				IP4Checker:true/* ,
-					minlength: 6,
-					pattern: /^\S*$/ */
- 	 		    
- 				//minlength: 5
- 			},
  			
-  	       /*  validName: function (input) {
-    	          if (input.is('[valid-name]')) {
-    	            var value = input.val();
-    	            
-    	            return value === "" ||
-    	              value === "raja";
-    	          }
-    	    
-    	          return true;
-    	        }, */
- 			
-			cygport: {
-				required: true,
-				number: true
-				//minlength: 5,
-				//equalTo: "#password1"
-			},
-			cygsid: {
-				required: true
-				//email: true
-			},
-			cygusername: {
+			sshusername: {
 				required: true
 			},
-			cygpassword: {
+			sshpassword: {
+				required: true
+			},
+			sship: {
+  				required: true,
+  				IP4Checker:true
+			},
+			sshlocation: {
 				required: true
 			}
 		},
 		messages: {
-			cygprfname: {
-				required: "Please enter the cygnet db profile name",
+			sshprfname: {
+				required: "Please enter the ssh profile name",
 				Profnamevalid:"Profile already exist",
 				minlength: "Minimum 4 character"
 			},
-			cygurl: {
-				required: "Please enter cygnet db url (eg: 10.5.185.214:1908:IPTSTDRS)"
-				//minlength: "Your username must consist of at least 2 characters"
+			sshusername: {
+				required: "Please enter the ssh db username"
 			},
-  			cygip: {
-  				required: "Please enter the cygnet db ip",
+			sshpassword: {
+				required: "Please enter the ssh db password"
+			},
+			sship: {
+  				required: "Please enter the ssh db ip",
  				IP4Checker: "Please enter the ip formate"
  				//minlength: "Your password must be at least 5 characters long"
-  			}, 
-  			/* cygip:{
-		  			validName: "raja is the only valid name",
-  			}, */
-			cygport: {
-				required: "Please enter the cygnet db port",
-				number: "Port should be number "
-			},
-			cygsid: {
-				required: "Please enter the cygnet db SID"
-			},
-			cygusername: {
-				required: "Please enter the cygnet db username"
-			},
-			cygpassword: {
-				required: "Please enter the cygnet db password"
+  			},
+			sshlocation: {
+				required: "Please enter the ssh db location"
 			}
 		},
 		

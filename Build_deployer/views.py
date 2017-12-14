@@ -211,8 +211,8 @@ def SshProfPageView(request):
     if request.method == 'GET':
         #Get the profile list from db
         dbconnection()
-        m6enctproflist=m6enct_prof_db_query
-        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        sshproflist=ssh_prof_db_query
+        proflist=sshproflist.get_prof_list_query(sshproflist)
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
@@ -230,12 +230,39 @@ def SshProfPageView(request):
 def SshAddProfPageView(request):
     if request.method == 'GET':
         dbconnection()
-        m6enctproflist=m6enct_prof_db_query
-        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        sshproflist=ssh_prof_db_query
+        proflist=sshproflist.get_prof_list_query(sshproflist)
         proflist = json.dumps(proflist)
         print(proflist)
         return render(request, 'SshAddProf.html', {'proflist': proflist}, )
     
+def ssh_add_prof_validation(request):
+    if request.method == 'POST':
+        sshaddvaldir=request.POST
+        print(sshaddvaldir)
+        dbconnection()
+        sshprofadd=ssh_prof_db_query
+        sshprofadd.insert_query(sshprofadd,sshaddvaldir)
+        return render(request, 'Complete.html',{'result': "SSH profile added",'location':'/build/SshProf.html'})
+
+def ssh_del_prof_validation(request):
+    if request.method == 'POST':
+        sshdelvaldir=request.POST
+        idList = sshdelvaldir.getlist('sshdellist')
+        #Get the profile list from db
+        dbconnection()
+        sshprofqueryobj=ssh_prof_db_query
+        proflist=sshprofqueryobj.get_prof_list_query(sshprofqueryobj)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        #print(myDict['cygdellist'])
+        profnamearr=pluginlist.convert_id_text_list(pluginlistobj,proflist,idList)
+        print(profnamearr)
+        #delete the profile in profnamearr
+        sshprofqueryobj.del_prof_query(sshprofqueryobj,profnamearr)
+        print("profile deleted")
+        return render(request, 'Complete.html',{'result': "SSH profile deleted",'location':'/build/SshProf.html'})
+     
 class TemplatesView(TemplateView):
     template_name = "LeftNav.html"
 
