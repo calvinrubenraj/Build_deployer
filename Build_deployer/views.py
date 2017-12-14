@@ -262,7 +262,11 @@ def ssh_del_prof_validation(request):
         sshprofqueryobj.del_prof_query(sshprofqueryobj,profnamearr)
         print("profile deleted")
         return render(request, 'Complete.html',{'result': "SSH profile deleted",'location':'/build/SshProf.html'})
-     
+    
+def BuildDeploymentView(request):
+    if request.method == 'GET':
+        return render(request, 'BuildDeploy.html')
+        
 class TemplatesView(TemplateView):
     template_name = "LeftNav.html"
 
