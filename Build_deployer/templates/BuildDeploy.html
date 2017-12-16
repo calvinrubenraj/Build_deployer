@@ -5,7 +5,7 @@
     .popover{
         max-width:500px;
     }
-    #profpanel{
+    #deploypanel{
     	margin: 0.7%;
     }
    .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; } 
@@ -13,59 +13,133 @@
    
 </style>
 
-<div id="profpanel" class="panel panel-primary">
+<div id="deploypanel" class="panel panel-primary">
 	<div class="panel-heading" align="center">
 		<div id="mainpanel">Build Deployment</div>
 	</div>
 	<div class="panel-body">
 		<div id="mainbody">
-			<div id="profpanel" class="panel panel-info">
-				<div class="panel-heading" align="center">
-					Deployment mode
+			<form id="builddeployform" method="post" class="form-horizontal" action="#">
+				{% csrf_token %}
+				<div id="deploypanel" class="panel panel-info">
+					<div class="panel-heading" align="center">
+						Deployment mode
+					</div>
+					<div class="panel-body" style="padding: 3%">
+						<div class="form-group">
+							<div id="checkbox">
+			                    <div class="radio">
+			                        <label>
+			                            <input type="radio" name="deploymode" id="credonly" value="option1" checked>Change DB credential(save war in same location) 
+			                        </label>
+			                    </div>					
+							</div>
+							<div id="checkbox">
+			                    <div class="radio">
+			                        <label>
+			                            <input type="radio" name="deploymode" id="creddes" value="option2">Change DB credentials and copy to destination location
+			                        </label>
+			                    </div>					
+							</div>
+							<div id="checkbox">
+			                    <div class="radio">
+			                        <label>
+			                            <input type="radio" name="deploymode" id="credbuild" value="option3">Change DB credentials and deploy the build
+			                        </label>
+			                    </div>
+							</div>
+							<div id="checkbox">
+			                    <div class="radio">
+			                        <label>
+			                            <input type="radio" name="deploymode" id="credcopy" value="option4">Copy the credentials from server and apply to the war file
+			                        </label>
+			                    </div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="panel-body">
-					<div id="checkbox">
-	                    <div class="radio">
-	                        <label>
-	                            <input type="radio" name="deploymode" id="optionsRadios1" value="option1" checked>Radio 1
-	                        </label>
-	                    </div>					
+				<div id="srcdespanel" class="panel panel-info">
+					<div class="panel-heading" align="center">
+						Source & Destination configuration
 					</div>
-					<div id="checkbox">
-	                    <div class="radio">
-	                        <label>
-	                            <input type="radio" name="deploymode" id="optionsRadios2" value="option2">Radio 2
-	                        </label>
-	                    </div>					
-					</div>
-					<div id="checkbox">
-	                    <div class="radio">
-	                        <label>
-	                            <input type="radio" name="deploymode" id="optionsRadios3" value="option3">Radio 3
-	                        </label>
-	                    </div>
-					</div>
-					<div id="checkbox">
-	                    <div class="radio">
-	                        <label>
-	                            <input type="radio" name="deploymode" id="optionsRadios4" value="option4">Radio 4
-	                        </label>
-	                    </div>
+					<div name="srcdespanelbody" class="panel-body">
+						<div id="srcdiv" align="center">
+							<p class="text-primary">Source build with location</p>
+							<div class="form-group">
+								<div class="col-sm-5">
+									<select class="js-example-basic-single" id="srcsshprof" name="srcsshprof" style="width: 90%">
+									</select>
+								</div>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" placeholder="Source location with build" name="srclocation" id="srclocation" />
+								</div>
+							</div>
+						</div>
+						<div id="desdiv" align="center">
+							<p class="text-primary">Destination with location</p>
+							<div class="form-group">
+								<div class="col-sm-5">
+									<select class="js-example-basic-single" id="dessshprof" name="dessshprof" style="width: 90%">
+									</select>
+								</div>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" placeholder="Destination location" name="deslocation" id="deslocation" />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-	</div>
+				<div id="profspanel" class="panel panel-info">
+					<div class="panel-heading" align="center">
+						DB profile selection and build setting  
+					</div>
+					<div name="srcdespanelbody" class="panel-body">
+						addsdxasd
+						asdasdasda
+						afasdfasf
+						asdasd
+					</div>
+				</div>
+			</form>	
+		</div>
 	</div>
 </div>
 <script src="/static/js/bootstrap-toggle.min.js"></script>
 
 <script>
-
+var slideupfunc = function() {
+	var r = $.Deferred();
+	$("div[name='srcdespanelbody']").slideUp("fast");
+	return r;
+};
+var slidedownfunc = function() {	 
+	$("div[name='srcdespanelbody']").slideDown("slow");
+};
+	
 $(document).ready(function(){
+    var radioValue = $("input[name='deploymode']:checked").val();
 	$("#mainbody").hide();
+    
+	//source ssh profile
+    $('#srcsshprof').select2({
+		placeholder: "Select ssh profile for source",
+		//data: proflist
+	});
+    $('#dessshprof').select2({
+		placeholder: "Select ssh profile for destination",
+		//data: proflist
+	});
+    
     $("#mainpanel").show(function(){
         $("#mainbody").slideDown("slow");
     });
+    $("input[name='deploymode']").click(function(){
+    	//slide up and down when radio button click
+    	slideupfunc().done(slidedownfunc());
+    	var radioValue = $("input[name='deploymode']:checked").val();
+    	//alert("selected mode" + radioValue);
+    });
+    
 });       
 </script>
 </html>
