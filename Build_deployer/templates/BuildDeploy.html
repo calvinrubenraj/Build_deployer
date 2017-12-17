@@ -64,7 +64,7 @@
 					</div>
 					<div name="srcdespanelbody" class="panel-body">
 						<div id="srcdiv" align="center">
-							<p class="text-primary">Source build with location</p>
+							<p class="text-primary">Source build with ssh profile and location</p>
 							<div class="form-group">
 								<div class="col-sm-5">
 									<select class="js-example-basic-single" id="srcsshprof" name="srcsshprof" style="width: 90%">
@@ -76,7 +76,7 @@
 							</div>
 						</div>
 						<div id="desdiv" align="center">
-							<p class="text-primary">Destination with location</p>
+							<p class="text-primary">Destination ssh profile with location</p>
 							<div class="form-group">
 								<div class="col-sm-5">
 									<select class="js-example-basic-single" id="dessshprof" name="dessshprof" style="width: 90%">
@@ -87,17 +87,76 @@
 								</div>
 							</div>
 						</div>
+						<div id="newfolder" align="center">
+							<div class="form-group" >
+								<div class="checkbox">
+                                	<label class="text-primary">
+                                	    <input id="newfoldercheck" name="newfoldercheck" type="checkbox" value="">Create new folder in destnaton location
+                                	</label>
+                                </div>
+							</div>
+							<div id="newfolderval" class="form-group">
+								<div class="col-sm-6 col-sm-offset-3">
+									<input id="newfoldername" class="form-control" name="newfoldername" placeholder="New folder name" disabled="" />
+								</div>
+							</div>
+						</div>
+						<div id="bkupfolder" align="center">
+							<div class="form-group" >
+								<div class="checkbox">
+                                	<label class="text-primary">
+                                	    <input id="bkupfoldercheck" name="bkupfoldercheck" type="checkbox" value="">Back up location and folder for running build
+                                	</label>
+                                </div>
+							</div>
+							<div id="bkupfolderval" class="form-group">
+								<div class="col-sm-6">
+									<input id="bkupfolderloc" class="form-control" name="bkupfolderloc" placeholder="Back up folder location" disabled="" />
+								</div>
+								<div class="col-sm-6">
+									<input id="bkupfoldername" class="form-control" name="bkupfoldername" placeholder="Back up folder name" disabled="" />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="profspanel" class="panel panel-info">
 					<div class="panel-heading" align="center">
 						DB profile selection and build setting  
 					</div>
-					<div name="srcdespanelbody" class="panel-body">
-						addsdxasd
-						asdasdasda
-						afasdfasf
-						asdasd
+					<div name="srcdespanelbody" class="panel-body" align="center">
+						<div class="form-group">
+							<div class="col-sm-4">
+								<select class="js-example-basic-single" id="cygprof" name="cygprof">
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<select class="js-example-basic-single" id="m6prof" name="m6prof">
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<select class="js-example-basic-single" id="m6enctprof" name="m6enctprof">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<label>
+									Message Queue IP server (Default: localhost)
+								</label>
+							</div>
+							<div class="col-sm-6">
+								<input id="mqip" class="form-control" name="mqip" placeholder="Message Queue IP" value="localhost"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<button type="submit" class="btn btn-primary" style="margin: 10%"><b>Deploy</b></button>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-danger" style="margin: 10%"><b>CANCEL</b></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</form>	
@@ -125,19 +184,70 @@ $(document).ready(function(){
 		placeholder: "Select ssh profile for source",
 		//data: proflist
 	});
+	
+	//destination ssh profile
     $('#dessshprof').select2({
 		placeholder: "Select ssh profile for destination",
+		//data: proflist
+	});
+	
+	//cygnet profile
+    $('#cygprof').select2({
+		placeholder: "Select cygnet db credential profile",
+		//data: proflist
+	});
+	
+	//M6 profile
+    $('#m6prof').select2({
+		placeholder: "Select M6 db credential profile",
+		//data: proflist
+	});
+	
+	//M6 encypty profile
+    $('#m6enctprof').select2({
+		placeholder: "Select M6 encrypt credential profile",
 		//data: proflist
 	});
     
     $("#mainpanel").show(function(){
         $("#mainbody").slideDown("slow");
     });
+    
+    //slide up and down while deploy mode clicked
     $("input[name='deploymode']").click(function(){
     	//slide up and down when radio button click
     	slideupfunc().done(slidedownfunc());
     	var radioValue = $("input[name='deploymode']:checked").val();
     	//alert("selected mode" + radioValue);
+    });
+    //new folder slide up and down in deployment
+    if($('#newfoldercheck').is(":not(:checked)")){
+    	$("#newfolderval").hide();
+    }
+    $('#newfoldercheck').click(function(){
+        if($(this).is(":checked")){
+        	$("#newfolderval").slideDown();
+        	$("#newfoldername").attr("disabled", false);
+        }
+        else if($(this).is(":not(:checked)")){
+        	$("#newfolderval").hide();
+        	$("#newfoldername").attr("disabled", true);
+        }
+    });
+    
+  //backup folder slide up and down in deployment
+    if($('#bkupfoldercheck').is(":not(:checked)")){
+    	$("#bkupfolderval").hide();
+    }
+    $('#bkupfoldercheck').click(function(){
+        if($(this).is(":checked")){
+        	$("#bkupfolderval").slideDown();
+        	$("#bkupfoldername,#bkupfolderloc").attr("disabled", false);
+        }
+        else if($(this).is(":not(:checked)")){
+        	$("#bkupfolderval").hide();
+        	$("#bkupfoldername,#bkupfolderloc").attr("disabled", true);
+        }
     });
     
 });       
