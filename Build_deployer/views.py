@@ -45,13 +45,6 @@ def CygnetFileProfPageView(request):
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
-#         for idx, val in enumerate(proflist):
-#             profdir={}
-#             profdir["id"]=str(idx+1)
-#             profdir["text"]=val
-#             profarr.append(profdir)
-            
-        #profdir = json.dumps(profdir)
         print(profarr)
 
         return render(request, 'CygFileProf.html', {'profarr' : profarr})
@@ -102,13 +95,6 @@ def M6FileProfPageView(request):
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
-#         for idx, val in enumerate(proflist):
-#             profdir={}
-#             profdir["id"]=str(idx+1)
-#             profdir["text"]=val
-#             profarr.append(profdir)
-            
-        #profdir = json.dumps(profdir)
         print(profarr)
 
         return render(request, 'M6FileProf.html', {'profarr' : profarr})
@@ -160,13 +146,7 @@ def M6EncrptyFileProfPageView(request):
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
-#         for idx, val in enumerate(proflist):
-#             profdir={}
-#             profdir["id"]=str(idx+1)
-#             profdir["text"]=val
-#             profarr.append(profdir)
             
-        #profdir = json.dumps(profdir)
         print(profarr)
 
         return render(request, 'M6EnctFileProf.html', {'profarr' : profarr})
@@ -216,13 +196,6 @@ def SshProfPageView(request):
         #Change the format according to 
         pluginlistobj=pluginlist
         profarr=pluginlist.id_text_list(pluginlistobj,proflist)
-#         for idx, val in enumerate(proflist):
-#             profdir={}
-#             profdir["id"]=str(idx+1)
-#             profdir["text"]=val
-#             profarr.append(profdir)
-            
-        #profdir = json.dumps(profdir)
         print(profarr)
 
         return render(request, 'SshProf.html', {'profarr' : profarr})
@@ -265,7 +238,33 @@ def ssh_del_prof_validation(request):
     
 def BuildDeploymentView(request):
     if request.method == 'GET':
-        return render(request, 'BuildDeploy.html')
+        #Get the profile list from db
+        dbconnection()
+        sshproflist=ssh_prof_db_query
+        proflist=sshproflist.get_prof_list_query(sshproflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        sshprofarr=pluginlist.id_text_list(pluginlistobj,proflist)
+        
+        cygproflist=cyg_prof_db_query
+        proflist=cygproflist.get_prof_list_query(cygproflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        cygprofarr=pluginlist.id_text_list(pluginlistobj,proflist)
+        
+        m6proflist=m6_prof_db_query
+        proflist=m6proflist.get_prof_list_query(m6proflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        m6profarr=pluginlist.id_text_list(pluginlistobj,proflist)
+        
+        m6enctproflist=m6enct_prof_db_query
+        proflist=m6enctproflist.get_prof_list_query(m6enctproflist)
+        #Change the format according to 
+        pluginlistobj=pluginlist
+        m6enctprofarr=pluginlist.id_text_list(pluginlistobj,proflist)
+        
+        return render(request, 'BuildDeploy.html', {'sshprofarr': sshprofarr, 'cygprofarr' :cygprofarr,'m6profarr':m6profarr,'m6enctprofarr':m6enctprofarr})
         
 class TemplatesView(TemplateView):
     template_name = "LeftNav.html"
